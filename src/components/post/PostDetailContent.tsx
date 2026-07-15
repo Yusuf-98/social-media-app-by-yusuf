@@ -140,7 +140,7 @@ export function PostDetailContent({ postId, variant = "page" }: PostDetailConten
                       disabled={deletePost.isPending}
                       onClick={() => setDeleteDialogOpen(true)}
                     >
-                      Delete
+                      Delete post
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -181,7 +181,7 @@ export function PostDetailContent({ postId, variant = "page" }: PostDetailConten
             <p className="text-md tracking-t-2 text-neutral-25 font-bold">Comments</p>
 
             <div
-              className={`gap-xl scrollbar-none flex w-full flex-col items-start overflow-y-auto max-h-100 ${isModalSheet ? "max-md:gap-lg" : ""}`}
+              className={`gap-xl flex max-h-100 w-full scrollbar-none flex-col items-start overflow-y-auto ${isModalSheet ? "max-md:gap-lg" : ""}`}
             >
               {commentsQuery.isLoading && (
                 <>
