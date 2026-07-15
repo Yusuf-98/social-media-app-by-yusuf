@@ -1,0 +1,192 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Custom variants */
+@custom-variant dark (&:is(.dark *));
+
+@custom-variant data-open {
+  &:where([data-state="open"]),
+  &:where([data-open]:not([data-open="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-closed {
+  &:where([data-state="closed"]),
+  &:where([data-closed]:not([data-closed="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-disabled {
+  &:where([data-disabled="true"]),
+  &:where([data-disabled]:not([data-disabled="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-active {
+  &:where([data-state="active"]),
+  &:where([data-active]:not([data-active="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-horizontal {
+  &:where([data-orientation="horizontal"]) {
+    @slot;
+  }
+}
+
+@custom-variant data-vertical {
+  &:where([data-orientation="vertical"]) {
+    @slot;
+  }
+}
+
+@theme {
+  /* Neutral */
+  --color-neutral-25: #fdfdfd;
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e9eaeb;
+  --color-neutral-300: #d5d7da;
+  --color-neutral-400: #a4a7ae;
+  --color-neutral-500: #717680;
+  --color-neutral-600: #535862;
+  --color-neutral-700: #414651;
+  --color-neutral-800: #252b37;
+  --color-neutral-900: #181d27;
+  --color-neutral-950: #0a0d12;
+
+  /* Primary */
+  --color-primary-100: #f6f9fe;
+  --color-primary-200: #7f51f9;
+  --color-primary-300: #6936f2;
+
+  /* Accent */
+  --color-accent-red: #d9206e;
+  --color-accent-green: #079455;
+  --color-accent-yellow: #fdb022;
+  --color-alert-danger: #b41759;
+
+  /* Base */
+  --color-base-white: #ffffff;
+  --color-base-black: #000000;
+
+  /* Radius */
+  --radius-none: 0px;
+  --radius-xxs: 2px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 20px;
+  --radius-4xl: 24px;
+
+  /* Spacing */
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-sm: 6px;
+  --spacing-md: 8px;
+  --spacing-lg: 12px;
+  --spacing-xl: 16px;
+  --spacing-2xl: 20px;
+  --spacing-3xl: 24px;
+  --spacing-4xl: 32px;
+  --spacing-5xl: 40px;
+  --spacing-6xl: 48px;
+  --spacing-7xl: 64px;
+  --spacing-8xl: 80px;
+  --spacing-9xl: 96px;
+  --spacing-10xl: 128px;
+  --spacing-11xl: 160px;
+
+  /* Typography */
+  --text-display-3xl: 56px;
+  --text-display-3xl--line-height: 68px;
+  --text-display-3xl--letter-spacing: -1.12px;
+  --text-display-xs: 24px;
+  --text-display-xs--line-height: 36px;
+  --text-xl: 20px;
+  --text-xl--line-height: 34px;
+  --text-lg: 18px;
+  --text-lg--line-height: 28px;
+  --text-lg--letter-spacing: -0.54px;
+  --text-md: 16px;
+  --text-md--line-height: 30px;
+  --text-md--letter-spacing: -0.32px;
+  --text-sm: 14px;
+  --text-sm--line-height: 28px;
+
+  /* Letter Spacing */
+  --tracking-t-none: 0em;
+  --tracking-t-1: -0.01em;
+  --tracking-t-2: -0.02em;
+  --tracking-t-3: -0.03em;
+}
+
+@theme inline {
+  --font-body: var(--font-body);
+  --font-display: var(--font-display);
+}
+
+@layer base {
+  * {
+    @apply outline-primary-200/50 border-neutral-700;
+  }
+  body {
+    @apply text-neutral-25 scrollbar-none bg-neutral-950;
+  }
+  html {
+    @apply font-body scrollbar-none;
+  }
+  button {
+    @apply outline-none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:not(:disabled) {
+    @apply cursor-pointer;
+  }
+  button:disabled {
+    @apply cursor-not-allowed;
+  }
+  button:focus-visible {
+    @apply ring-primary-200/50 ring-2;
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  textarea:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px var(--color-neutral-950) inset;
+    box-shadow: 0 0 0px 1000px var(--color-neutral-950) inset;
+    -webkit-text-fill-color: var(--color-neutral-25);
+    caret-color: var(--color-neutral-25);
+    background-color: var(--color-neutral-950) !important;
+    font-family: var(--font-body);
+    font-size: var(--text-md);
+    transition:
+      background-color 5000s ease-in-out 0s,
+      box-shadow 5000s ease-in-out 0s;
+  }
+}
+
+/* Custom Container */
+@layer components {
+  .custom-container {
+    @apply max-w-360 px-4 md:px-[clamp(16px,-102.86px+15.48vw,120px)];
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
