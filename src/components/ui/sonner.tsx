@@ -17,7 +17,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
         unstyled: true,
         classNames: {
           toast:
-            "flex h-5xl items-center justify-between gap-md rounded-md px-lg py-md w-88.25! max-sm:left-auto! max-sm:right-0! max-sm:w-[min(353px,calc(100vw-32px))]! md:w-[clamp(291px,423.86px-9.23vw,353px)]!",
+            "flex min-h-5xl items-center justify-between gap-md rounded-md px-lg py-md w-88.25! max-sm:left-auto! max-sm:right-0! max-sm:w-[min(353px,calc(100vw-32px))]! md:w-[clamp(291px,423.86px-9.23vw,353px)]!",
           icon: "hidden",
           title: "flex-1 text-sm font-semibold tracking-t-2 text-base-white",
           closeButton:
