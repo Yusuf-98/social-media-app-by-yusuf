@@ -3,12 +3,13 @@
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { getFeed } from "@/lib/api/feed";
 import { applyLikeSaveCrossCheckList } from "@/lib/likeSaveCrossCheck";
+import { qk } from "@/lib/queryKeys";
 
 export function useFeed(enabled = true) {
   const queryClient = useQueryClient();
 
   return useInfiniteQuery({
-    queryKey: ["feed"],
+    queryKey: qk.feed(),
     queryFn: async ({ pageParam }: { pageParam: number }) => {
       const data = await getFeed({ page: pageParam, limit: 10 });
       return { ...data, posts: applyLikeSaveCrossCheckList(queryClient, data.posts) };

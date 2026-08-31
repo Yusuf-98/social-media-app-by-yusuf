@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deletePost } from "@/lib/api/posts";
-import { invalidatePostQueries } from "@/lib/queryKeys";
+import { invalidateAllPostQueries, qk } from "@/lib/queryKeys";
 
 export function useDeletePost() {
   const queryClient = useQueryClient();
@@ -10,7 +10,8 @@ export function useDeletePost() {
   return useMutation({
     mutationFn: (id: number) => deletePost(id),
     onSuccess: (_data, id) => {
-      invalidatePostQueries(queryClient, id);
+      queryClient.invalidateQueries({ queryKey: qk.post(id) });
+      invalidateAllPostQueries(queryClient);
     },
   });
 }

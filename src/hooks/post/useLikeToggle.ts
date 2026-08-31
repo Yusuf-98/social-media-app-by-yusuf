@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { likePost, unlikePost } from "@/lib/api/likes";
 import { trackEvent } from "@/lib/analytics";
 import { patchPost } from "@/lib/postCache";
-import { invalidatePostQueries, isPostOrUserQuery } from "@/lib/queryKeys";
+import { invalidatePost, isPostOrUserQuery, qk } from "@/lib/queryKeys";
 import type { Post } from "@/types/api";
 
 export function useLikeToggle(post: Pick<Post, "id" | "likedByMe" | "likeCount">) {
@@ -19,12 +19,12 @@ export function useLikeToggle(post: Pick<Post, "id" | "likedByMe" | "likeCount">
       await queryClient.cancelQueries({ predicate: isPostOrUserQuery });
       const previous = queryClient.getQueriesData({ predicate: isPostOrUserQuery });
       const nextLiked = !post.likedByMe;
-      const nextCount = post.likeCount + (nextLiked ? 1 : -1);
+      const nextCount = Math.max(0, post.likeCount + (nextLiked ? 1 : -1));
       queryClient.setQueriesData({ predicate: isPostOrUserQuery }, (old: unknown) =>
         patchPost(old, post.id, { likedByMe: nextLiked, likeCount: nextCount })
       );
       // Liked-post-ids sync
-      queryClient.setQueryData<number[]>(["me", "likedPostIds"], (old = []) =>
+      queryClient.setQueryData<number[]>(qk.me.likedIds(), (old = []) =>
         nextLiked ? [...new Set([...old, post.id])] : old.filter((id) => id !== post.id)
       );
       return { previous };
@@ -32,7 +32,7 @@ export function useLikeToggle(post: Pick<Post, "id" | "likedByMe" | "likeCount">
     onError: (_err, _vars, context) => {
       context?.previous.forEach(([key, data]) => queryClient.setQueryData(key, data));
       // Resync on error only
-      invalidatePostQueries(queryClient, post.id);
+      invalidatePost(queryClient, post.id);
     },
   });
 }

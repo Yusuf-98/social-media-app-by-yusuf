@@ -33,7 +33,7 @@ export function CreatePostView() {
 
     createPost.mutate(formData, {
       onSuccess: () => {
-        toast.success("Success Post");
+        toast.success("Post shared successfully");
         router.push("/feed");
       },
       onError: (error) => {

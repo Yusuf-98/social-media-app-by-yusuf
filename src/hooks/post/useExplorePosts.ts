@@ -3,12 +3,13 @@
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { getExplorePosts } from "@/lib/api/posts";
 import { applyLikeSaveCrossCheckList } from "@/lib/likeSaveCrossCheck";
+import { qk } from "@/lib/queryKeys";
 
 export function useExplorePosts(enabled = true) {
   const queryClient = useQueryClient();
 
   return useInfiniteQuery({
-    queryKey: ["posts", "explore"],
+    queryKey: qk.explorePosts(),
     queryFn: async ({ pageParam }: { pageParam: number }) => {
       const data = await getExplorePosts({ page: pageParam, limit: 10 });
       return { ...data, posts: applyLikeSaveCrossCheckList(queryClient, data.posts) };

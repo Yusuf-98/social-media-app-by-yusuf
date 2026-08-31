@@ -18,6 +18,13 @@ export class ApiError extends Error {
   }
 }
 
+// Unauthorized (401) callback registry
+let unauthorizedHandler: (() => void) | null = null;
+
+export function setUnauthorizedHandler(handler: () => void) {
+  unauthorizedHandler = handler;
+}
+
 // Query string helper
 export function buildQuery(params?: Record<string, string | number | undefined>): string {
   if (!params) return "";
@@ -49,6 +56,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   }
 
   if (!res.ok || !json.success) {
+    if (res.status === 401 && token) unauthorizedHandler?.();
     throw new ApiError(json.message || "Request failed", res.status);
   }
   return json.data as T;

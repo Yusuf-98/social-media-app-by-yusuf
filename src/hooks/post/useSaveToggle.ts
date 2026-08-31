@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { savePost, unsavePost } from "@/lib/api/saves";
 import { trackEvent } from "@/lib/analytics";
 import { patchPost } from "@/lib/postCache";
-import { invalidatePostQueries, isPostOrUserQuery } from "@/lib/queryKeys";
+import { invalidatePost, isPostOrUserQuery, qk } from "@/lib/queryKeys";
 import type { Post } from "@/types/api";
 
 export function useSaveToggle(post: Pick<Post, "id" | "savedByMe">) {
@@ -23,7 +23,7 @@ export function useSaveToggle(post: Pick<Post, "id" | "savedByMe">) {
         patchPost(old, post.id, { savedByMe: nextSaved })
       );
       // Saved-post-ids sync
-      queryClient.setQueryData<number[]>(["me", "savedPostIds"], (old = []) =>
+      queryClient.setQueryData<number[]>(qk.me.savedIds(), (old = []) =>
         nextSaved ? [...new Set([...old, post.id])] : old.filter((id) => id !== post.id)
       );
       return { previous };
@@ -31,7 +31,7 @@ export function useSaveToggle(post: Pick<Post, "id" | "savedByMe">) {
     onError: (_err, _vars, context) => {
       context?.previous.forEach(([key, data]) => queryClient.setQueryData(key, data));
       // Resync on error only
-      invalidatePostQueries(queryClient, post.id);
+      invalidatePost(queryClient, post.id);
     },
   });
 }

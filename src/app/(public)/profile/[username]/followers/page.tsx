@@ -1,11 +1,10 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import { FollowListPage } from "@/components/user/FollowListPage";
 
-export default function UserFollowersPage() {
-  const params = useParams<{ username: string }>();
-  const username = params.username;
+interface UserFollowersPageProps {
+  params: Promise<{ username: string }>;
+}
 
+export default async function UserFollowersPage({ params }: UserFollowersPageProps) {
+  const { username } = await params;
   return <FollowListPage type="followers" username={username} basePath={`/profile/${username}`} />;
 }

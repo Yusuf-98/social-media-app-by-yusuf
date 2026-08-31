@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sociality
 
-## Getting Started
+A full-stack-consuming social media app built with Next.js — feed, posts, comments,
+likes, saves, follows, and profiles, backed by a REST API.
 
-First, run the development server:
+## Tech stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [Next.js](https://nextjs.org) (App Router) + TypeScript
+- [Tailwind CSS](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com)
+- [TanStack Query](https://tanstack.com/query) for server state (feed, posts, comments,
+  likes, saves, follows)
+- [Redux Toolkit](https://redux-toolkit.js.org) for auth/session state only
+- [React Hook Form](https://react-hook-form.com) + [Zod](https://zod.dev) for form
+  validation
+- [Vitest](https://vitest.dev) + [Testing Library](https://testing-library.com) for
+  unit/integration tests
+
+## Getting started
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Configure environment variables — create `.env.local`:
+
+   ```bash
+   NEXT_PUBLIC_API_BASE_URL=https://your-api-host.example.com
+   ```
+
+3. Run the dev server:
+
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000).
+
+## Scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the dev server |
+| `npm run build` | Production build |
+| `npm run start` | Run the production build |
+| `npm run lint` | Lint the codebase |
+| `npm run test` | Run the test suite |
+| `npm run format` | Format with Prettier |
+| `npm run format:check` | Check formatting without writing |
+
+## Features
+
+- Email/password auth (register, login, logout) with a global session guard that clears
+  state and redirects to login on an expired/invalid token
+- Feed (authenticated) and Explore (public) post streams with infinite scroll
+- Post detail — opened as a modal over the feed or as its own page when shared directly
+  — with comments, like, save, share, and owner-only delete
+- Create post with image upload, also available as a modal or its own page
+- Public and private profile pages, with dedicated `Posts`, `Saved`, and `Likes` routes
+  on your own profile, plus a `Settings` panel for account info and logout
+- Followers/following lists, follow/unfollow
+- User search
+- Optimistic updates (with rollback) for like, save, follow, and comment actions
+
+## Project structure
+
+```
+src/
+  app/            Routes (App Router) — Server Components by default,
+                  interactive pieces delegated to client components
+  components/     UI components, grouped by feature (post, profile, comment, ...)
+  hooks/          TanStack Query hooks, grouped by feature
+  lib/api/        API client + one file per resource
+  lib/            Shared utilities (cache patching, query keys, pagination, ...)
+  store/          Redux slice (auth token + hydration flag only)
+  types/          Shared API types
+  proxy.ts        Server-side route guard (Next's middleware convention)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Architecture notes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Server state (feed, posts, comments, likes, saves, follows) lives in TanStack Query;
+  Redux only holds the auth token and hydration flag.
+- Query keys are centralized in `src/lib/queryKeys.ts` via a typed factory (`qk`) to
+  keep cache invalidation consistent and typo-proof.
+- Route protection is enforced server-side in `src/proxy.ts` (Next's middleware
+  convention) in addition to client-side auth checks.
+- Pages that don't need client interactivity for their initial render are Server
+  Components (with `generateMetadata` for post detail and profile pages); interactive
+  pieces are split into client child components.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Known limitations
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- No end-to-end/browser test coverage yet — the test suite covers cache utilities, data
+  hooks, and the auth/401 flow.
+- Response shapes for a few endpoints are normalized at the API-client boundary
+  (`src/lib/api/`) to paper over inconsistencies in the upstream API rather than being
+  fixed at the source.

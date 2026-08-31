@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ImageOff } from "lucide-react";
 import { useState } from "react";
 import type { Post } from "@/types/api";
 
@@ -14,7 +15,14 @@ interface PostImageProps {
 export function PostImage({ post, sizes, className, loading = "lazy" }: PostImageProps) {
   const [error, setError] = useState(false);
 
-  if (error) return null;
+  if (error) {
+    return (
+      <div className="gap-sm absolute inset-0 flex flex-col items-center justify-center bg-neutral-900">
+        <ImageOff className="size-8 text-neutral-600" />
+        <p className="text-sm text-neutral-600">Image unavailable</p>
+      </div>
+    );
+  }
 
   return (
     <Image

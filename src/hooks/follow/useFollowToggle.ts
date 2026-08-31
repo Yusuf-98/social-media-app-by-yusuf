@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { followUser, unfollowUser } from "@/lib/api/follow";
 import { trackEvent } from "@/lib/analytics";
 import { patchUserFollow } from "@/lib/userCache";
-import { invalidateUserQueries, isPostOrUserQuery } from "@/lib/queryKeys";
+import { invalidateUserProfile, isPostOrUserQuery } from "@/lib/queryKeys";
 
 interface FollowTarget {
   username: string;
@@ -32,7 +32,7 @@ export function useFollowToggle(target: FollowTarget) {
       context?.previous.forEach(([key, data]) => queryClient.setQueryData(key, data));
     },
     onSettled: () => {
-      invalidateUserQueries(queryClient);
+      invalidateUserProfile(queryClient, target.username);
     },
   });
 }

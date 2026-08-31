@@ -2,8 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { clearStoredToken } from "@/lib/auth-storage";
-import { logout } from "@/store/authSlice";
+import { clearAuthToken } from "@/lib/auth-storage";
 import { useAppDispatch } from "@/store/hooks";
 
 export function useLogout() {
@@ -12,8 +11,7 @@ export function useLogout() {
   const router = useRouter();
 
   return function handleLogout() {
-    clearStoredToken();
-    dispatch(logout());
+    clearAuthToken(dispatch);
     queryClient.clear();
     router.push("/feed");
   };

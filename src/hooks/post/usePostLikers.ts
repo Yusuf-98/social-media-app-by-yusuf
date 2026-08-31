@@ -2,10 +2,11 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPostLikes } from "@/lib/api/likes";
+import { qk } from "@/lib/queryKeys";
 
 export function usePostLikers(postId: number, enabled: boolean) {
   return useInfiniteQuery({
-    queryKey: ["post", postId, "likes"],
+    queryKey: qk.postLikers(postId),
     queryFn: ({ pageParam }: { pageParam: number }) =>
       getPostLikes(postId, { page: pageParam, limit: 20 }),
     initialPageParam: 1,

@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPost } from "@/lib/api/posts";
-import { invalidatePostQueries } from "@/lib/queryKeys";
+import { invalidateAllPostQueries } from "@/lib/queryKeys";
 
 export function useCreatePost() {
   const queryClient = useQueryClient();
@@ -10,7 +10,7 @@ export function useCreatePost() {
   return useMutation({
     mutationFn: (formData: FormData) => createPost(formData),
     onSuccess: () => {
-      invalidatePostQueries(queryClient);
+      invalidateAllPostQueries(queryClient);
     },
   });
 }

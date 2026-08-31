@@ -3,15 +3,21 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getMyFollowers, getMyFollowing } from "@/lib/api/follow";
 import { getUserFollowers, getUserFollowing } from "@/lib/api/users";
+import { qk } from "@/lib/queryKeys";
 
 interface UseFollowListParams {
   type: "followers" | "following";
   username?: string;
 }
 
+function followListKey({ type, username }: UseFollowListParams) {
+  if (username) return type === "followers" ? qk.users.followers(username) : qk.users.following(username);
+  return type === "followers" ? qk.me.followers() : qk.me.following();
+}
+
 export function useFollowList({ type, username }: UseFollowListParams) {
   return useInfiniteQuery({
-    queryKey: username ? ["users", username, type] : ["me", type],
+    queryKey: followListKey({ type, username }),
     queryFn: ({ pageParam }: { pageParam: number }) =>
       username
         ? type === "followers"
