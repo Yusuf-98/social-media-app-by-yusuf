@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { CheckCircleIcon, GridIcon, HeartOutlineIcon, ShareIcon } from "@/components/icons";
 import { EmptyState } from "@/components/common/EmptyState";
 import { ErrorState } from "@/components/common/ErrorState";
@@ -30,6 +30,13 @@ interface ProfileContentProps {
 export function ProfileContent({ username }: ProfileContentProps) {
   const [tab, setTab] = useState<Tab>("gallery");
   const router = useRouter();
+  const galleryTabRef = useRef<HTMLButtonElement>(null);
+  const likedTabRef = useRef<HTMLButtonElement>(null);
+
+  function moveTab(next: Tab) {
+    setTab(next);
+    (next === "gallery" ? galleryTabRef : likedTabRef).current?.focus();
+  }
 
   const { data: profile, isLoading, isError, error, refetch } = useUserProfile(username);
   const { isAuthenticated } = useAuth();
@@ -161,9 +168,24 @@ export function ProfileContent({ username }: ProfileContentProps) {
         {/* Gallery Container */}
         <div className="gap-2xl flex w-full flex-col items-start">
           {/* Gallery Header (Tabs) */}
-          <div className="flex w-full items-center">
+          <div
+            role="tablist"
+            aria-label="Profile content"
+            className="flex w-full items-center"
+            onKeyDown={(e) => {
+              if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+              e.preventDefault();
+              moveTab(tab === "gallery" ? "liked" : "gallery");
+            }}
+          >
             <button
+              ref={galleryTabRef}
               type="button"
+              role="tab"
+              id="tab-gallery"
+              aria-selected={tab === "gallery"}
+              aria-controls="tabpanel-gallery"
+              tabIndex={tab === "gallery" ? 0 : -1}
               onClick={() => setTab("gallery")}
               className={cn(
                 "h-6xl gap-sm px-2xl flex flex-1 items-center justify-center border-b",
@@ -181,7 +203,13 @@ export function ProfileContent({ username }: ProfileContentProps) {
               </p>
             </button>
             <button
+              ref={likedTabRef}
               type="button"
+              role="tab"
+              id="tab-liked"
+              aria-selected={tab === "liked"}
+              aria-controls="tabpanel-liked"
+              tabIndex={tab === "liked" ? 0 : -1}
               onClick={() => setTab("liked")}
               className={cn(
                 "h-6xl gap-sm px-2xl flex flex-1 items-center justify-center border-b",
@@ -202,8 +230,16 @@ export function ProfileContent({ username }: ProfileContentProps) {
             </button>
           </div>
 
-          {tab === "gallery" && <UserPostsGrid username={username} />}
-          {tab === "liked" && <UserLikesGrid username={username} />}
+          {tab === "gallery" && (
+            <div role="tabpanel" id="tabpanel-gallery" aria-labelledby="tab-gallery" className="w-full">
+              <UserPostsGrid username={username} />
+            </div>
+          )}
+          {tab === "liked" && (
+            <div role="tabpanel" id="tabpanel-liked" aria-labelledby="tab-liked" className="w-full">
+              <UserLikesGrid username={username} />
+            </div>
+          )}
         </div>
       </div>
     </div>
