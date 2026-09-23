@@ -92,7 +92,7 @@ export function PostDetailContent({ postId, variant = "page" }: PostDetailConten
         <PostImage
           post={post}
           sizes="(min-width: 1024px) 720px, 100vw"
-          className="object-cover"
+          className="object-contain"
           loading="eager"
         />
       </div>

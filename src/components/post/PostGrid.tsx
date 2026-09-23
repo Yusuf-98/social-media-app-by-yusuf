@@ -18,7 +18,7 @@ export function PostGrid({ posts }: PostGridProps) {
           <PostImage
             post={post}
             sizes="(min-width: 768px) 33vw, 33vw"
-            className="object-cover"
+            className="object-contain"
             loading={index === 0 ? "eager" : "lazy"}
           />
         </Link>

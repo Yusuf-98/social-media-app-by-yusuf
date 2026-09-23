@@ -68,12 +68,13 @@ export function PostCard({ post, priorityImage = false }: PostCardProps) {
         {/* Image */}
         <Link
           href={`/posts/${post.id}`}
-          className="relative block aspect-square w-full overflow-hidden rounded-md bg-neutral-950"
+          className="block max-h-[600px] w-full overflow-hidden rounded-md bg-neutral-950"
         >
           <PostImage
             post={post}
+            natural
             sizes="(min-width: 768px) 600px, 100vw"
-            className="object-cover"
+            className="max-h-[600px] object-contain"
             loading={priorityImage ? "eager" : "lazy"}
           />
         </Link>
