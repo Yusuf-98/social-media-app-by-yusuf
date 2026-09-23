@@ -36,7 +36,11 @@ export function LoginForm() {
       router.replace(searchParams.get("returnTo") || "/feed");
     },
     onError: (error) => {
-      toast.error(error instanceof ApiError ? error.message : "Login failed");
+      if (error instanceof ApiError && error.status === 401) {
+        toast.error("Incorrect email or password. Please try again.");
+        return;
+      }
+      toast.error("Something went wrong. Please try again.");
     },
   });
 
