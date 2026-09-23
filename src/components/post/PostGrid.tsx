@@ -13,7 +13,7 @@ export function PostGrid({ posts }: PostGridProps) {
         <Link
           key={post.id}
           href={`/posts/${post.id}`}
-          className="rounded-xs md:rounded-sm relative aspect-square w-full overflow-hidden bg-neutral-200"
+          className="rounded-xs md:rounded-sm relative aspect-square w-full overflow-hidden bg-neutral-950"
         >
           <PostImage
             post={post}
