@@ -100,6 +100,7 @@ export function MyProfilePageShell({ activeTab, children }: MyProfilePageShellPr
                   <ShareDialog path={`/profile/${me.username}`}>
                     <button
                       type="button"
+                      aria-label="Share"
                       className="md:size-6xl flex size-10 shrink-0 items-center justify-center rounded-full border border-neutral-900"
                     >
                       <ShareIcon className="size-5 md:size-6" />
