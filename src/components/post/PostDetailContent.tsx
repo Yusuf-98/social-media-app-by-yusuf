@@ -88,7 +88,7 @@ export function PostDetailContent({ postId, variant = "page" }: PostDetailConten
       }`}
     >
       {/* Image */}
-      <div className="relative aspect-square w-full min-w-0 bg-neutral-900">
+      <div className="relative aspect-square w-full min-w-0 bg-neutral-950">
         <PostImage
           post={post}
           sizes="(min-width: 1024px) 720px, 100vw"
