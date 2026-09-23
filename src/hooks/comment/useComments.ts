@@ -53,7 +53,7 @@ export function useAddComment(postId: number) {
       };
       queryClient.setQueryData<InfiniteData<CommentsPage>>(qk.comments(postId), (old) => {
         if (!old) {
-          // Synthesize first page (pre-fetch optimistic comment)
+          // First page
           return {
             pages: [
               {

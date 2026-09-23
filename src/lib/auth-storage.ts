@@ -19,13 +19,11 @@ function clearStoredToken() {
   document.cookie = `${TOKEN_KEY}=; path=/; max-age=0`;
 }
 
-/** Sets token across localStorage, cookie, and Redux in one call */
 export function applyAuthToken(token: string, dispatch: AppDispatch) {
   setStoredToken(token);
   dispatch(setCredentials(token));
 }
 
-/** Clears token across localStorage, cookie, and Redux in one call */
 export function clearAuthToken(dispatch: AppDispatch) {
   clearStoredToken();
   dispatch(logout());

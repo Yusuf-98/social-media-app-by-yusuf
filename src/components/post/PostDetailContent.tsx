@@ -44,7 +44,6 @@ import { flattenPages } from "@/lib/pagination";
 
 interface PostDetailContentProps {
   postId: number;
-  /** Variant */
   variant?: "page" | "modal";
 }
 

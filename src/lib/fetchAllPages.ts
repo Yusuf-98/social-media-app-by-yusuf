@@ -5,7 +5,6 @@ type PostListFetcher = (params: {
   limit: number;
 }) => Promise<{ posts: Post[]; pagination: Pagination }>;
 
-/** Fetches every page of a paginated post-list endpoint and returns just the ids */
 export async function fetchAllPostIds(fetcher: PostListFetcher): Promise<number[]> {
   const ids: number[] = [];
   let page = 1;

@@ -1,4 +1,3 @@
-/** Dedup helper for infinite-query pages */
 export function flattenPages<TPage, TItem extends { id: number }>(
   pages: TPage[] | undefined,
   getItems: (page: TPage) => TItem[]

@@ -19,7 +19,6 @@ import { cn } from "@/lib/utils";
 
 interface PostCardProps {
   post: Post;
-  /** Eagerly load the image — pass for the first card above the fold (e.g. top of the feed) */
   priorityImage?: boolean;
 }
 

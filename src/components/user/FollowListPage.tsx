@@ -20,7 +20,6 @@ import { cn } from "@/lib/utils";
 interface FollowListPageProps {
   type: "followers" | "following";
   username?: string;
-  /** Base path to switch tabs from, e.g. "/me" or "/profile/tonogw" */
   basePath: string;
 }
 

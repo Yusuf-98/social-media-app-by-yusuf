@@ -15,7 +15,7 @@ export default function PublicLayout({
 }) {
   const pathname = usePathname();
   const isModalRoute = /^\/posts\/\d+$/.test(pathname) || pathname === "/posts/create";
-  // Navbar visibility (routes with their own mobile header hide it on mobile)
+  // Navbar visibility
   const hasOwnMobileHeader =
     /^\/profile\/[^/]+\/(followers|following)$/.test(pathname) || pathname === "/posts/create";
 

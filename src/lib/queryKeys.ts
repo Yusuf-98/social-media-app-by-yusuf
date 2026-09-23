@@ -1,6 +1,6 @@
 import type { Query, QueryClient } from "@tanstack/react-query";
 
-/** Query key factory */
+// --- Query keys ---
 export const qk = {
   feed: () => ["feed"] as const,
   explorePosts: () => ["posts", "explore"] as const,
@@ -29,23 +29,20 @@ export const qk = {
 
 const POST_USER_QUERY_ROOTS = new Set(["feed", "posts", "me", "users", "post"]);
 
-/** Post/user query scope */
+// --- Invalidation ---
 export function isPostOrUserQuery({ queryKey }: Query): boolean {
   return POST_USER_QUERY_ROOTS.has(queryKey[0] as string);
 }
 
-/** Resync a single post after a mutation error */
 export function invalidatePost(queryClient: QueryClient, postId: number) {
   queryClient.invalidateQueries({ queryKey: qk.post(postId) });
 }
 
-/** Resync a user's profile (and my own stats) after a follow mutation settles */
 export function invalidateUserProfile(queryClient: QueryClient, username: string) {
   queryClient.invalidateQueries({ queryKey: qk.users.profile(username) });
   queryClient.invalidateQueries({ queryKey: qk.me.self() });
 }
 
-/** One-time reconciliation after liked/saved ids finish hydrating at startup */
 export function invalidateAllPostQueries(queryClient: QueryClient) {
   queryClient.invalidateQueries({ predicate: isPostOrUserQuery });
 }

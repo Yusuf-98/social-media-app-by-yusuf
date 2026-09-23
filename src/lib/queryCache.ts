@@ -1,17 +1,12 @@
 import type { InfiniteData } from "@tanstack/react-query";
 
 interface PatchEntityConfig<TItem> {
-  /** Key of the array field on flat list caches, e.g. "posts" or "users". */
   arrayKey: string;
-  /** Structural guard confirming a value is actually this entity type. */
   isItem: (value: unknown) => value is TItem;
-  /** Identifies the one item to patch. */
   matches: (item: TItem) => boolean;
-  /** Returns the patched item. */
   patch: (item: TItem) => TItem;
 }
 
-/** Patches an entity across any cached query shape */
 export function patchEntityInCache<TItem, TData = unknown>(
   data: TData,
   config: PatchEntityConfig<TItem>

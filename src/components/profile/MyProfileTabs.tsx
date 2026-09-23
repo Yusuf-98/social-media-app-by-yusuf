@@ -12,7 +12,6 @@ interface MyProfileTabsProps {
   active: Tab;
 }
 
-/** Tab item */
 function TabLink({
   href,
   active,
