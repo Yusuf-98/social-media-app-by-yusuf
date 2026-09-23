@@ -48,9 +48,11 @@ likes, saves, follows, and profiles, backed by a REST API.
 | ![Followers](docs/screenshots/followers.png) | ![Following](docs/screenshots/following.png) |
 | **Followers** | **Following** |
 
-![Search](docs/screenshots/search.png)
+<p align="center">
+  <img src="docs/screenshots/search.png" alt="User search with debounced results" width="400">
+</p>
 
-**Search** — debounced user search
+<p align="center"><b>Search</b> — debounced user search</p>
 
 ## Tech stack
 
