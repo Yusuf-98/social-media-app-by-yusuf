@@ -55,6 +55,7 @@ export function MobileBottomNav() {
 
       <Link
         href="/posts/create"
+        prefetch={false}
         aria-label="Create post"
         className="bg-primary-300 md:p-md flex size-11 shrink-0 items-center justify-center rounded-full p-[7.333px] md:size-12"
       >
@@ -63,6 +64,7 @@ export function MobileBottomNav() {
 
       <Link
         href="/me"
+        prefetch={false}
         onClick={(e) => hardNavigate(e, "/me")}
         className="gap-xxs md:gap-xs flex w-23.5 flex-col items-center justify-center"
       >

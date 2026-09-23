@@ -16,6 +16,7 @@ export function EmptyGallery() {
       </div>
       <Link
         href="/posts/create"
+        prefetch={false}
         className="bg-primary-300 p-md tracking-t-1 text-neutral-25 md:h-6xl md:text-md md:tracking-t-2 flex h-10 w-64.75 items-center justify-center rounded-full text-sm font-bold"
       >
         Upload My First Post

@@ -84,7 +84,9 @@ export function Navbar() {
                       <p className="tracking-t-2 text-sm text-neutral-400">{user?.username}</p>
                     </div>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem render={<Link href="/me" />}>My Profile</DropdownMenuItem>
+                    <DropdownMenuItem render={<Link href="/me" prefetch={false} />}>
+                      My Profile
+                    </DropdownMenuItem>
                     <DropdownMenuItem variant="destructive" onClick={handleLogout}>
                       Log Out
                     </DropdownMenuItem>
@@ -113,7 +115,9 @@ export function Navbar() {
                     <p className="tracking-t-2 text-sm text-neutral-400">{user?.username}</p>
                   </div>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem render={<Link href="/me" />}>My Profile</DropdownMenuItem>
+                  <DropdownMenuItem render={<Link href="/me" prefetch={false} />}>
+                    My Profile
+                  </DropdownMenuItem>
                   <DropdownMenuItem variant="destructive" onClick={handleLogout}>
                     Log Out
                   </DropdownMenuItem>
