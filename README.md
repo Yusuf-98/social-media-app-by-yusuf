@@ -7,6 +7,10 @@ likes, saves, follows, and profiles, backed by a REST API.
 
 **Live demo:** [social-media-app-by-yusuf.vercel.app](https://social-media-app-by-yusuf.vercel.app/)
 
+<p align="center">
+  <img src="docs/screenshots/feed-hero.png" alt="Sociality feed with posts, likes and comments" width="820">
+</p>
+
 ## Tech stack
 
 - [Next.js](https://nextjs.org) (App Router) + TypeScript
@@ -80,6 +84,27 @@ to `main` (see `.github/workflows/ci.yml`).
 - Followers/following lists, follow/unfollow
 - User search
 - Optimistic updates (with rollback) for like, save, follow, and comment actions
+
+## Screenshots
+
+| | |
+| --- | --- |
+| ![Login](docs/screenshots/login.png) | ![Register](docs/screenshots/register.png) |
+| **Login** — email/password sign-in | **Register** — create an account |
+| ![Feed](docs/screenshots/feed.png) | ![Explore](docs/screenshots/explore.png) |
+| **Feed** — posts from people you follow, with likes and comments | **Explore** — public feed for signed-out visitors |
+| ![Post detail](docs/screenshots/post-detail.png) | ![Post detail, empty comments](docs/screenshots/post-detail-empty-comments.png) |
+| **Post detail** — opens as a modal over the feed | **Post detail** — empty state before the first comment |
+| ![Create post](docs/screenshots/create-post.png) | ![My profile](docs/screenshots/my-profile.png) |
+| **Create post** — image upload, also opens as a modal | **My profile** — gallery grid with stats |
+| ![Empty profile](docs/screenshots/my-profile-empty.png) | ![Edit profile](docs/screenshots/edit-profile.png) |
+| **Empty profile** — first-post call to action | **Edit profile** |
+| ![Followers](docs/screenshots/followers.png) | ![Following](docs/screenshots/following.png) |
+| **Followers** | **Following** |
+
+![Search](docs/screenshots/search.png)
+
+**Search** — debounced user search
 
 ## Project structure
 
