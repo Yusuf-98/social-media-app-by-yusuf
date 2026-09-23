@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { TrashIcon, UploadArrowIcon, UploadCloudIcon } from "@/components/icons";
+import { cn } from "@/lib/utils";
 
 interface PhotoDropzoneProps {
   file: File | null;
@@ -31,7 +32,10 @@ export function PhotoDropzone({ file, onFileChange, error }: PhotoDropzoneProps)
   return (
     <div className="gap-sm flex w-full flex-col items-start">
       <div
-        className={`gap-lg px-3xl py-xl relative flex w-full flex-col items-center rounded-xl bg-neutral-950 ${borderColorClass}`}
+        className={cn(
+          "gap-lg px-3xl py-xl relative flex w-full flex-col items-center rounded-xl bg-neutral-950",
+          borderColorClass
+        )}
       >
         <svg className="pointer-events-none absolute inset-0 size-full" aria-hidden="true">
           <rect

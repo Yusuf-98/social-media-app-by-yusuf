@@ -41,6 +41,7 @@ import { trackEvent } from "@/lib/analytics";
 import { ApiError } from "@/lib/api/client";
 import { formatRelativeTime } from "@/lib/format";
 import { flattenPages } from "@/lib/pagination";
+import { cn } from "@/lib/utils";
 
 interface PostDetailContentProps {
   postId: number;
@@ -82,9 +83,10 @@ export function PostDetailContent({ postId, variant = "page" }: PostDetailConten
 
   return (
     <div
-      className={`gap-3xl mx-auto flex w-full max-w-300 flex-col lg:grid lg:aspect-5/3 lg:grid-cols-[3fr_2fr] lg:items-stretch lg:gap-0 ${
-        isModalSheet ? "max-md:h-full" : ""
-      }`}
+      className={cn(
+        "gap-3xl mx-auto flex w-full max-w-300 flex-col lg:grid lg:aspect-5/3 lg:grid-cols-[3fr_2fr] lg:items-stretch lg:gap-0",
+        isModalSheet && "max-md:h-full"
+      )}
     >
       {/* Image */}
       <div className="relative aspect-square w-full min-w-0 bg-neutral-950">
@@ -98,13 +100,17 @@ export function PostDetailContent({ postId, variant = "page" }: PostDetailConten
 
       {/* Post Container */}
       <div
-        className={`lg:p-2xl flex w-full min-w-0 flex-col items-start gap-11.5 ${
-          isModalSheet ? "max-lg:gap-lg max-lg:px-xl max-lg:pt-xl max-lg:pb-4xl" : ""
-        }`}
+        className={cn(
+          "lg:p-2xl flex w-full min-w-0 flex-col items-start gap-11.5",
+          isModalSheet && "max-lg:gap-lg max-lg:px-xl max-lg:pt-xl max-lg:pb-4xl"
+        )}
       >
         {/* Post Content */}
         <div
-          className={`gap-xl flex min-h-0 w-full flex-1 flex-col items-start ${isModalSheet ? "max-md:gap-lg" : ""}`}
+          className={cn(
+            "gap-xl flex min-h-0 w-full flex-1 flex-col items-start",
+            isModalSheet && "max-md:gap-lg"
+          )}
         >
           {/* Post Header */}
           <div className="gap-sm flex w-full flex-col items-start">
@@ -175,12 +181,15 @@ export function PostDetailContent({ postId, variant = "page" }: PostDetailConten
 
           {/* Comments Section */}
           <div
-            className={`gap-xl flex w-full flex-col items-start ${isModalSheet ? "max-md:gap-lg" : ""}`}
+            className={cn("gap-xl flex w-full flex-col items-start", isModalSheet && "max-md:gap-lg")}
           >
             <p className="text-md tracking-t-2 text-neutral-25 font-bold">Comments</p>
 
             <div
-              className={`gap-xl flex max-h-100 w-full scrollbar-none flex-col items-start overflow-y-auto ${isModalSheet ? "max-md:gap-lg" : ""}`}
+              className={cn(
+                "gap-xl flex max-h-100 w-full scrollbar-none flex-col items-start overflow-y-auto",
+                isModalSheet && "max-md:gap-lg"
+              )}
             >
               {commentsQuery.isLoading && (
                 <>
