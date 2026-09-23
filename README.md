@@ -1,7 +1,11 @@
 # Sociality
 
+[![CI](https://github.com/Yusuf-98/social-media-app-by-yusuf/actions/workflows/ci.yml/badge.svg)](https://github.com/Yusuf-98/social-media-app-by-yusuf/actions/workflows/ci.yml)
+
 A full-stack-consuming social media app built with Next.js — feed, posts, comments,
 likes, saves, follows, and profiles, backed by a REST API.
+
+**Live demo:** [social-media-app-by-yusuf.vercel.app](https://social-media-app-by-yusuf.vercel.app/)
 
 ## Tech stack
 
@@ -23,10 +27,10 @@ likes, saves, follows, and profiles, backed by a REST API.
    npm install
    ```
 
-2. Configure environment variables — create `.env.local`:
+2. Configure environment variables — copy `.env.example` to `.env.local` and fill it in:
 
    ```bash
-   NEXT_PUBLIC_API_BASE_URL=https://your-api-host.example.com
+   cp .env.example .env.local
    ```
 
 3. Run the dev server:
@@ -48,6 +52,20 @@ likes, saves, follows, and profiles, backed by a REST API.
 | `npm run test` | Run the test suite |
 | `npm run format` | Format with Prettier |
 | `npm run format:check` | Check formatting without writing |
+
+## Testing
+
+Unit and integration tests run on [Vitest](https://vitest.dev) +
+[Testing Library](https://testing-library.com), co-located with the code they cover
+(`*.test.ts(x)`). They target real interactive logic — optimistic mutations and
+rollback, cache patching, auth token handling — rather than static markup.
+
+```bash
+npm run test
+```
+
+CI runs lint, typecheck, tests, and a production build on every push and pull request
+to `main` (see `.github/workflows/ci.yml`).
 
 ## Features
 
@@ -89,6 +107,11 @@ src/
 - Pages that don't need client interactivity for their initial render are Server
   Components (with `generateMetadata` for post detail and profile pages); interactive
   pieces are split into client child components.
+
+## Deployment
+
+Deployed on [Vercel](https://vercel.com), auto-deploying `main`. `NEXT_PUBLIC_API_BASE_URL`
+is configured as a project environment variable there.
 
 ## Known limitations
 
