@@ -59,7 +59,7 @@ export function PhotoDropzone({ file, onFileChange, error }: PhotoDropzoneProps)
         {previewUrl ? (
           <>
             <div className="relative aspect-square w-full shrink-0 md:aspect-auto md:size-98.75">
-              <Image src={previewUrl} alt="" fill unoptimized className="object-cover" />
+              <Image src={previewUrl} alt="" fill unoptimized className="object-contain" />
             </div>
             <div className="gap-lg flex items-start">
               <button
