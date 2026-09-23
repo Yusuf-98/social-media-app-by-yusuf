@@ -1,15 +1,17 @@
 "use client";
 
 import { usePathname, useParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { PostDetailContent } from "@/components/post/PostDetailContent";
 import { CloseIcon } from "@/components/icons";
+import { useModalA11y } from "@/hooks/common/useModalA11y";
 
 export default function PostDetailModal() {
   const params = useParams<{ id: string }>();
   const postId = Number(params.id);
   const router = useRouter();
   const pathname = usePathname();
+  const panelRef = useRef<HTMLDivElement>(null);
 
   // Scroll lock
   useEffect(() => {
@@ -20,6 +22,8 @@ export default function PostDetailModal() {
     };
   }, []);
 
+  useModalA11y(panelRef, () => router.back());
+
   // Stale slot guard
   if (!pathname.startsWith(`/posts/${params.id}`)) return null;
 
@@ -29,12 +33,17 @@ export default function PostDetailModal() {
       onClick={() => router.back()}
     >
       <div
-        className="custom-container gap-md md:gap-3xl mx-auto flex w-full flex-col"
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        tabIndex={-1}
+        className="custom-container gap-md md:gap-3xl mx-auto flex w-full flex-col outline-none"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           type="button"
           onClick={() => router.back()}
+          aria-label="Close"
           className="flex size-6 items-center justify-center self-end"
         >
           <CloseIcon className="size-6" />
