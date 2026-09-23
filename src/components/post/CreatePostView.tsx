@@ -14,7 +14,11 @@ import { useCreatePost } from "@/hooks/post/useCreatePost";
 import { ApiError } from "@/lib/api/client";
 import { createPostSchema, type CreatePostFormValues } from "@/lib/validators/post";
 
-export function CreatePostView() {
+interface CreatePostViewProps {
+  variant?: "page" | "modal";
+}
+
+export function CreatePostView({ variant = "page" }: CreatePostViewProps) {
   const router = useRouter();
   const { user } = useAuth();
   const createPost = useCreatePost();
@@ -42,31 +46,37 @@ export function CreatePostView() {
     });
   }
 
+  const isModal = variant === "modal";
+
   return (
     <div>
       {/* Header - mobile */}
-      <div className="h-7xl gap-md bg-base-black px-xl flex items-center justify-between border-b border-neutral-900 md:hidden">
-        <div className="gap-md flex flex-1 items-center">
-          <button type="button" onClick={() => router.back()} aria-label="Back">
-            <ArrowIcon className="size-6 rotate-180" />
-          </button>
-          <p className="text-md tracking-t-2 text-neutral-25 flex-1 font-bold">Add Post</p>
+      {!isModal && (
+        <div className="h-7xl gap-md bg-base-black px-xl flex items-center justify-between border-b border-neutral-900 md:hidden">
+          <div className="gap-md flex flex-1 items-center">
+            <button type="button" onClick={() => router.back()} aria-label="Back">
+              <ArrowIcon className="size-6 rotate-180" />
+            </button>
+            <p className="text-md tracking-t-2 text-neutral-25 flex-1 font-bold">Add Post</p>
+          </div>
+          <Avatar className="size-10">
+            <AvatarImage src={user?.avatarUrl ?? undefined} alt={user?.name ?? ""} />
+            <AvatarFallback>{user?.name?.[0]?.toUpperCase() ?? "?"}</AvatarFallback>
+          </Avatar>
         </div>
-        <Avatar className="size-10">
-          <AvatarImage src={user?.avatarUrl ?? undefined} alt={user?.name ?? ""} />
-          <AvatarFallback>{user?.name?.[0]?.toUpperCase() ?? "?"}</AvatarFallback>
-        </Avatar>
-      </div>
+      )}
 
-      <div className="custom-container mx-auto">
+      <div className={isModal ? "mx-auto" : "custom-container mx-auto"}>
         <div className="gap-3xl pt-xl pb-3xl mx-auto flex w-full max-w-113 flex-col items-start md:pt-[clamp(16px,-11.43px+3.57vw,40px)]">
           {/* Header - desktop */}
-          <div className="gap-lg hidden items-center md:flex">
-            <button type="button" onClick={() => router.back()} aria-label="Back">
-              <ArrowIcon className="size-8 rotate-180" />
-            </button>
-            <p className="font-display text-display-xs text-neutral-25 font-bold">Add Post</p>
-          </div>
+          {!isModal && (
+            <div className="gap-lg hidden items-center md:flex">
+              <button type="button" onClick={() => router.back()} aria-label="Back">
+                <ArrowIcon className="size-8 rotate-180" />
+              </button>
+              <p className="font-display text-display-xs text-neutral-25 font-bold">Add Post</p>
+            </div>
+          )}
 
           <form
             onSubmit={handleSubmit(onSubmit)}

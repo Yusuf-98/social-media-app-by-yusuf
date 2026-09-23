@@ -14,7 +14,7 @@ export default function PublicLayout({
   modal: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isModalRoute = /^\/posts\/\d+$/.test(pathname);
+  const isModalRoute = /^\/posts\/\d+$/.test(pathname) || pathname === "/posts/create";
   // Navbar visibility (routes with their own mobile header hide it on mobile)
   const hasOwnMobileHeader =
     /^\/profile\/[^/]+\/(followers|following)$/.test(pathname) || pathname === "/posts/create";

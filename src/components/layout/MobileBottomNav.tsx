@@ -55,7 +55,7 @@ export function MobileBottomNav() {
 
       <Link
         href="/posts/create"
-        onClick={(e) => hardNavigate(e, "/posts/create")}
+        aria-label="Create post"
         className="bg-primary-300 md:p-md flex size-11 shrink-0 items-center justify-center rounded-full p-[7.333px] md:size-12"
       >
         <AddIcon className="size-5.5 md:size-6" />
