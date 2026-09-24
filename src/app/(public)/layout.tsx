@@ -45,10 +45,10 @@ export default function PublicLayout({
         <Navbar />
         {showModal && <div className="absolute inset-0 z-40 bg-neutral-950/80" />}
       </div>
-      <div className="relative pb-22 md:pb-26">
+      <main className="relative pb-22 md:pb-26">
         {showModal ? pinnedChildren : children}
         {modal}
-      </div>
+      </main>
       <div className={showModal ? "pointer-events-none relative" : undefined}>
         <MobileBottomNav />
         {showModal && <div className="absolute inset-0 z-40 bg-neutral-950/80" />}

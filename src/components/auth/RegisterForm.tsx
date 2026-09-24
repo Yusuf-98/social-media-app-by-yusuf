@@ -43,7 +43,7 @@ export function RegisterForm() {
   });
 
   return (
-    <div className="bg-base-black relative min-h-screen w-full overflow-clip">
+    <main className="bg-base-black relative min-h-screen w-full overflow-clip">
       <AuthBackground />
       <div className="py-8xl relative z-10 flex min-h-screen items-center justify-center">
         {/* Card */}
@@ -133,6 +133,6 @@ export function RegisterForm() {
           </form>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

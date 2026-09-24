@@ -11,7 +11,7 @@ export default function MeLayout({ children }: { children: React.ReactNode }) {
       <div className="hidden md:block">
         <Navbar />
       </div>
-      {children}
+      <main>{children}</main>
     </>
   );
 }

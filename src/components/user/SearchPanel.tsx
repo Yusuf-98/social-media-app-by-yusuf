@@ -32,7 +32,7 @@ export function SearchPanel() {
   const isFetchingQuery = isFetching && !isFetchingNextPage;
 
   return (
-    <div className="flex w-full flex-col items-start">
+    <main className="flex w-full flex-col items-start">
       {/* Header */}
       <div className="h-7xl gap-xl bg-base-black px-xl flex w-full shrink-0 items-center border-b border-neutral-900">
         {/* Search */}
@@ -85,6 +85,6 @@ export function SearchPanel() {
           />
         )}
       </div>
-    </div>
+    </main>
   );
 }
