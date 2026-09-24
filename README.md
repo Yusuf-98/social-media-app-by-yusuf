@@ -125,10 +125,16 @@ pull request to `main` (see [ci.yml](.github/workflows/ci.yml)).
 - The first/priority image in the feed and grid loads eagerly; everything else is lazy.
 - Post images render at their own aspect ratio instead of being cropped, avoiding a
   fixed-box reflow once the real image loads.
-- Pages that don't need client interactivity for their initial render are Server
-  Components, keeping their JS out of the client bundle.
+- Route pages are thin Server Component shells; the feed prefetches its first page on the
+  server and hydrates it into TanStack Query, so the first post image is in the initial
+  HTML and preloaded with `fetchpriority="high"`.
+- `/feed` is statically rendered and revalidated every minute, and a route-level skeleton
+  matches the real post card dimensions to avoid layout shift while loading.
+- SF Pro is served as subsetted WOFF2 (about 480 KB instead of about 880 KB as OTF).
 - TanStack Query caches server state with a 30s stale time, and infinite scroll loads
   posts/comments/lists a page at a time instead of all at once.
+- Lighthouse on the live `/feed`: desktop 99; mobile 66–74 under the default simulated
+  Slow 4G and 4× CPU throttling (best practices 100, CLS 0).
 
 ## API
 
