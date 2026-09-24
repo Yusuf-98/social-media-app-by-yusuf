@@ -13,11 +13,12 @@ import { useFeed } from "@/hooks/post/useFeed";
 import { flattenPages } from "@/lib/pagination";
 
 export function FeedContent() {
-  const { isAuthenticated, hasHydrated } = useAuth();
+  const { isAuthenticated: hasToken, hasHydrated } = useAuth();
   const ready = useIsClient() && hasHydrated;
+  const isAuthenticated = ready && hasToken;
 
-  const feedQuery = useFeed(hasHydrated && isAuthenticated);
-  const exploreQuery = useExplorePosts(hasHydrated && !isAuthenticated);
+  const feedQuery = useFeed(isAuthenticated);
+  const exploreQuery = useExplorePosts(ready && !hasToken);
   const { data, isLoading, isError, refetch, fetchNextPage, hasNextPage, isFetchingNextPage } =
     isAuthenticated ? feedQuery : exploreQuery;
 
