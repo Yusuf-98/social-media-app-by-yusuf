@@ -5,11 +5,13 @@ import { useEffect, useRef } from "react";
 interface InfiniteScrollSentinelProps {
   onIntersect: () => void;
   enabled?: boolean;
+  rootMargin?: string;
 }
 
 export function InfiniteScrollSentinel({
   onIntersect,
   enabled = true,
+  rootMargin = "200px",
 }: InfiniteScrollSentinelProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -22,12 +24,12 @@ export function InfiniteScrollSentinel({
       (entries) => {
         if (entries[0].isIntersecting) onIntersect();
       },
-      { rootMargin: "200px" }
+      { rootMargin }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [onIntersect, enabled]);
+  }, [onIntersect, enabled, rootMargin]);
 
   return <div ref={ref} className="h-px w-full" />;
 }
