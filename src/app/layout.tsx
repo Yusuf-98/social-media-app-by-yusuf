@@ -7,10 +7,10 @@ import "./globals.css";
 
 const sfProDisplay = localFont({
   src: [
-    { path: "../fonts/SF-Pro-Display-Regular.otf", weight: "400", style: "normal" },
-    { path: "../fonts/SF-Pro-Display-Medium.otf", weight: "500", style: "normal" },
-    { path: "../fonts/SF-Pro-Display-Semibold.otf", weight: "600", style: "normal" },
-    { path: "../fonts/SF-Pro-Display-Bold.otf", weight: "700", style: "normal" },
+    { path: "../fonts/SF-Pro-Display-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/SF-Pro-Display-Medium.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/SF-Pro-Display-Semibold.woff2", weight: "600", style: "normal" },
+    { path: "../fonts/SF-Pro-Display-Bold.woff2", weight: "700", style: "normal" },
   ],
   variable: "--font-display",
   display: "swap",
@@ -18,10 +18,10 @@ const sfProDisplay = localFont({
 
 const sfProText = localFont({
   src: [
-    { path: "../fonts/SF-Pro-Text-Regular.otf", weight: "400", style: "normal" },
-    { path: "../fonts/SF-Pro-Text-Medium.otf", weight: "500", style: "normal" },
-    { path: "../fonts/SF-Pro-Text-Semibold.otf", weight: "600", style: "normal" },
-    { path: "../fonts/SF-Pro-Text-Bold.otf", weight: "700", style: "normal" },
+    { path: "../fonts/SF-Pro-Text-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/SF-Pro-Text-Medium.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/SF-Pro-Text-Semibold.woff2", weight: "600", style: "normal" },
+    { path: "../fonts/SF-Pro-Text-Bold.woff2", weight: "700", style: "normal" },
   ],
   variable: "--font-body",
   display: "swap",
