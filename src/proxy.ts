@@ -1,7 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { TOKEN_KEY } from "@/lib/auth-constants";
 
 export function proxy(request: NextRequest) {
-  const token = request.cookies.get("sociality_token")?.value;
+  const token = request.cookies.get(TOKEN_KEY)?.value;
 
   if (!token) {
     const loginUrl = new URL("/login", request.url);

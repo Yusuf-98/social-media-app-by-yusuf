@@ -1,7 +1,6 @@
+import { TOKEN_KEY } from "@/lib/auth-constants";
 import { setCredentials, logout } from "@/store/authSlice";
 import type { AppDispatch } from "@/store/store";
-
-const TOKEN_KEY = "sociality_token";
 
 export function getStoredToken(): string | null {
   if (typeof window === "undefined") return null;
