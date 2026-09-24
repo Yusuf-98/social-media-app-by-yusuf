@@ -130,12 +130,14 @@ pull request to `main` (see [ci.yml](.github/workflows/ci.yml)).
   HTML and preloaded with `fetchpriority="high"`.
 - `/feed` is statically rendered and revalidated every minute, and a route-level skeleton
   matches the real post card dimensions to avoid layout shift while loading.
-- SF Pro is served as Latin-subset WOFF2 (about 180 KB instead of about 880 KB as OTF), and only
-  the weights used above the fold are preloaded.
-- TanStack Query caches server state with a 30s stale time, and infinite scroll loads
-  posts/comments/lists a page at a time instead of all at once.
-- Lighthouse on the live `/feed`: desktop 99; mobile 66–74 under the default simulated
-  Slow 4G and 4× CPU throttling (best practices 100, CLS 0).
+- SF Pro is served as Latin-subset WOFF2 (about 180 KB instead of about 880 KB as OTF); only
+  the body family is preloaded.
+- TanStack Query caches server state with a 30s stale time. The feed loads 4 posts per
+  page and requests the next page before the reader reaches the end, and other lists load
+  a page at a time instead of all at once.
+- Lighthouse on the live `/feed` (September 2026): desktop 98–99; mobile 75–83 (LCP 2.3–3.2 s)
+  under the default simulated Slow 4G and 4× CPU throttling. Accessibility 96, best
+  practices 100, SEO 100, CLS 0.
 
 ## API
 
