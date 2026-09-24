@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ImageOff } from "lucide-react";
 import { useState } from "react";
+import { isOptimizableImage } from "@/lib/image";
 import { cn } from "@/lib/utils";
 import type { Post } from "@/types/api";
 
@@ -25,6 +26,7 @@ export function PostImage({
 }: PostImageProps) {
   const [error, setError] = useState(false);
   const alt = post.caption || `Post by ${post.author.name}`;
+  const unoptimized = !isOptimizableImage(post.imageUrl);
 
   if (error) {
     return (
@@ -51,6 +53,7 @@ export function PostImage({
         className={cn("h-auto w-full", className)}
         loading={loading}
         fetchPriority={fetchPriority}
+        unoptimized={unoptimized}
         onError={() => setError(true)}
       />
     );
@@ -65,6 +68,7 @@ export function PostImage({
       className={className}
       loading={loading}
       fetchPriority={fetchPriority}
+      unoptimized={unoptimized}
       onError={() => setError(true)}
     />
   );

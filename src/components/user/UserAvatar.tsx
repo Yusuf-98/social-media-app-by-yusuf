@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ProfileFilledIcon } from "@/components/icons";
+import { isOptimizableImage } from "@/lib/image";
 import { cn } from "@/lib/utils";
 
 interface UserAvatarProps {
@@ -12,7 +13,14 @@ export function UserAvatar({ src, alt, className }: UserAvatarProps) {
   if (src) {
     return (
       <div className={cn("relative shrink-0 overflow-hidden rounded-full", className)}>
-        <Image src={src} alt={alt} fill sizes="128px" className="object-cover" />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="128px"
+          unoptimized={!isOptimizableImage(src)}
+          className="object-cover"
+        />
       </div>
     );
   }
