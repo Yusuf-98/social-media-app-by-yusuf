@@ -14,6 +14,7 @@ const sfProDisplay = localFont({
   ],
   variable: "--font-display",
   display: "swap",
+  preload: false,
 });
 
 const sfProText = localFont({
