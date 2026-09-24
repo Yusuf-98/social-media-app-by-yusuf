@@ -128,7 +128,9 @@ export function PostDetailContent({ postId, variant = "page" }: PostDetailConten
                   <p className="tracking-t-1 text-neutral-25 text-sm font-bold">
                     {post.author.name}
                   </p>
-                  <p className="text-xs text-neutral-400">{formatRelativeTime(post.createdAt)}</p>
+                  <p suppressHydrationWarning className="text-xs text-neutral-400">
+                    {formatRelativeTime(post.createdAt)}
+                  </p>
                 </div>
               </Link>
               {user?.id === post.author.id && (
