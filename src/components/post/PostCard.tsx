@@ -57,7 +57,10 @@ export function PostCard({ post, priorityImage = false }: PostCardProps) {
               <p className="tracking-t-1 text-neutral-25 md:text-md md:tracking-t-2 w-full text-sm font-bold">
                 {post.author.name}
               </p>
-              <p className="md:tracking-t-2 w-full text-xs text-neutral-400 md:text-sm">
+              <p
+                suppressHydrationWarning
+                className="md:tracking-t-2 w-full text-xs text-neutral-400 md:text-sm"
+              >
                 {formatRelativeTime(post.createdAt)}
               </p>
             </div>
@@ -75,6 +78,7 @@ export function PostCard({ post, priorityImage = false }: PostCardProps) {
             sizes="(min-width: 768px) 600px, 100vw"
             className="max-h-150 object-contain"
             loading={priorityImage ? "eager" : "lazy"}
+            fetchPriority={priorityImage ? "high" : undefined}
           />
         </Link>
       </div>

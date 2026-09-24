@@ -11,10 +11,18 @@ interface PostImageProps {
   sizes: string;
   className?: string;
   loading?: "eager" | "lazy";
+  fetchPriority?: "high" | "low" | "auto";
   natural?: boolean;
 }
 
-export function PostImage({ post, sizes, className, loading = "lazy", natural = false }: PostImageProps) {
+export function PostImage({
+  post,
+  sizes,
+  className,
+  loading = "lazy",
+  fetchPriority,
+  natural = false,
+}: PostImageProps) {
   const [error, setError] = useState(false);
   const alt = post.caption || `Post by ${post.author.name}`;
 
@@ -42,6 +50,7 @@ export function PostImage({ post, sizes, className, loading = "lazy", natural = 
         sizes={sizes}
         className={cn("h-auto w-full", className)}
         loading={loading}
+        fetchPriority={fetchPriority}
         onError={() => setError(true)}
       />
     );
@@ -55,6 +64,7 @@ export function PostImage({ post, sizes, className, loading = "lazy", natural = 
       sizes={sizes}
       className={className}
       loading={loading}
+      fetchPriority={fetchPriority}
       onError={() => setError(true)}
     />
   );
