@@ -3,6 +3,7 @@
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { getFeed } from "@/lib/api/feed";
 import { applyLikeSaveCrossCheckList } from "@/lib/likeSaveCrossCheck";
+import { FEED_PAGE_SIZE } from "@/lib/pagination";
 import { qk } from "@/lib/queryKeys";
 
 export function useFeed(enabled = true) {
@@ -11,7 +12,7 @@ export function useFeed(enabled = true) {
   return useInfiniteQuery({
     queryKey: qk.feed(),
     queryFn: async ({ pageParam }: { pageParam: number }) => {
-      const data = await getFeed({ page: pageParam, limit: 10 });
+      const data = await getFeed({ page: pageParam, limit: FEED_PAGE_SIZE });
       return { ...data, posts: applyLikeSaveCrossCheckList(queryClient, data.posts) };
     },
     initialPageParam: 1,

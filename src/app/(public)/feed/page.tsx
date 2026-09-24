@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { FeedContent } from "@/components/post/FeedContent";
 import { getExplorePosts } from "@/lib/api/posts";
+import { FEED_PAGE_SIZE } from "@/lib/pagination";
 import { qk } from "@/lib/queryKeys";
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export default async function FeedPage() {
     queryClient.prefetchInfiniteQuery({
       queryKey: qk.explorePosts(),
       queryFn: ({ pageParam }: { pageParam: number }) =>
-        getExplorePosts({ page: pageParam, limit: 10 }),
+        getExplorePosts({ page: pageParam, limit: FEED_PAGE_SIZE }),
       initialPageParam: 1,
     }),
     new Promise((resolve) => setTimeout(resolve, PREFETCH_TIMEOUT_MS)),

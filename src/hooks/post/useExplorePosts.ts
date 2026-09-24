@@ -3,6 +3,7 @@
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { getExplorePosts } from "@/lib/api/posts";
 import { applyLikeSaveCrossCheckList } from "@/lib/likeSaveCrossCheck";
+import { FEED_PAGE_SIZE } from "@/lib/pagination";
 import { qk } from "@/lib/queryKeys";
 
 export function useExplorePosts(enabled = true) {
@@ -11,7 +12,7 @@ export function useExplorePosts(enabled = true) {
   return useInfiniteQuery({
     queryKey: qk.explorePosts(),
     queryFn: async ({ pageParam }: { pageParam: number }) => {
-      const data = await getExplorePosts({ page: pageParam, limit: 10 });
+      const data = await getExplorePosts({ page: pageParam, limit: FEED_PAGE_SIZE });
       return { ...data, posts: applyLikeSaveCrossCheckList(queryClient, data.posts) };
     },
     initialPageParam: 1,

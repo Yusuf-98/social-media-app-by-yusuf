@@ -12,6 +12,8 @@ import { useExplorePosts } from "@/hooks/post/useExplorePosts";
 import { useFeed } from "@/hooks/post/useFeed";
 import { flattenPages } from "@/lib/pagination";
 
+const FEED_ROOT_MARGIN = "800px";
+
 export function FeedContent() {
   const { isAuthenticated: hasToken, hasHydrated } = useAuth();
   const ready = useIsClient() && hasHydrated;
@@ -42,6 +44,7 @@ export function FeedContent() {
         <InfiniteScrollSentinel
           onIntersect={() => fetchNextPage()}
           enabled={!!hasNextPage && !isFetchingNextPage}
+          rootMargin={FEED_ROOT_MARGIN}
         />
       )}
     </FeedShell>
