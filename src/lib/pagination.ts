@@ -1,4 +1,4 @@
-export const FEED_PAGE_SIZE = 4;
+export const FEED_PAGE_SIZE = 3;
 
 export function flattenPages<TPage, TItem extends { id: number }>(
   pages: TPage[] | undefined,
