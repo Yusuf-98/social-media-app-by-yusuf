@@ -135,7 +135,7 @@ pull request to `main` (see [ci.yml](.github/workflows/ci.yml)).
 - TanStack Query caches server state with a 30s stale time. The feed loads 3 posts per
   page and requests the next page before the reader reaches the end, and other lists load
   a page at a time instead of all at once.
-- Lighthouse on the live `/feed` (September 2026): desktop 98–99; mobile 75–83 (LCP 2.3–3.2 s)
+- Lighthouse on the live `/feed` (September 2026): desktop 99–100; mobile 79–93 (LCP 2.9–4.1 s)
   under the default simulated Slow 4G and 4× CPU throttling. Accessibility 96, best
   practices 100, SEO 100, CLS 0.
 
