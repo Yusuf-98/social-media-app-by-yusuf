@@ -132,7 +132,7 @@ pull request to `main` (see [ci.yml](.github/workflows/ci.yml)).
   matches the real post card dimensions to avoid layout shift while loading.
 - SF Pro is served as Latin-subset WOFF2 (about 180 KB instead of about 880 KB as OTF); only
   the body family is preloaded.
-- TanStack Query caches server state with a 30s stale time. The feed loads 4 posts per
+- TanStack Query caches server state with a 30s stale time. The feed loads 3 posts per
   page and requests the next page before the reader reaches the end, and other lists load
   a page at a time instead of all at once.
 - Lighthouse on the live `/feed` (September 2026): desktop 98–99; mobile 75–83 (LCP 2.3–3.2 s)
