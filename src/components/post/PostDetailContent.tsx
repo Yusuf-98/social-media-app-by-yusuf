@@ -281,7 +281,7 @@ export function PostDetailContent({ postId, variant = "page" }: PostDetailConten
           ) : (
             <Link
               href={`/login?returnTo=/posts/${postId}`}
-              className="text-md text-primary-200 font-bold"
+              className="text-md text-primary-150 font-bold"
             >
               Log in to comment
             </Link>

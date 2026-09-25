@@ -124,7 +124,7 @@ export function RegisterForm() {
                 </span>
                 <Link
                   href="/login"
-                  className="text-primary-200 font-bold tracking-[clamp(-0.32px,-0.0724px-0.0172vw,-0.14px)]"
+                  className="text-primary-150 font-bold tracking-[clamp(-0.32px,-0.0724px-0.0172vw,-0.14px)]"
                 >
                   Log in
                 </Link>

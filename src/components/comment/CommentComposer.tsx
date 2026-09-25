@@ -36,7 +36,7 @@ export function CommentComposer({ postId }: CommentComposerProps) {
           disabled={addComment.isPending || !text.trim()}
           className={cn(
             "tracking-t-1 md:text-md md:tracking-t-2 shrink-0 text-sm font-bold disabled:opacity-50",
-            text.trim() ? "text-primary-200" : "text-neutral-600"
+            text.trim() ? "text-primary-150" : "text-neutral-600"
           )}
         >
           Post

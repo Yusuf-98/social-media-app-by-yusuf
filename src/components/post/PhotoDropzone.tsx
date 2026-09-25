@@ -26,7 +26,7 @@ export function PhotoDropzone({ file, onFileChange, error }: PhotoDropzoneProps)
   const borderColorClass = error
     ? "text-alert-danger"
     : isDragging
-      ? "text-primary-200"
+      ? "text-primary-150"
       : "text-neutral-900";
 
   return (
@@ -111,7 +111,7 @@ export function PhotoDropzone({ file, onFileChange, error }: PhotoDropzoneProps)
             </div>
             <div className="gap-xs flex w-full flex-col items-center">
               <div className="gap-xs flex items-start justify-center">
-                <span className="tracking-t-2 text-primary-200 text-sm font-bold">
+                <span className="tracking-t-2 text-primary-150 text-sm font-bold">
                   Click to upload
                 </span>
                 <span className="tracking-t-2 text-sm font-semibold text-neutral-600">

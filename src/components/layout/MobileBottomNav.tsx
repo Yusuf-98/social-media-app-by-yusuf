@@ -46,7 +46,7 @@ export function MobileBottomNav() {
         <p
           className={cn(
             "text-neutral-25 md:text-md text-xs",
-            isHome && "text-primary-200 font-bold"
+            isHome && "text-primary-150 font-bold"
           )}
         >
           Home
@@ -76,7 +76,7 @@ export function MobileBottomNav() {
         <p
           className={cn(
             "text-neutral-25 md:text-md text-xs",
-            isProfile && "text-primary-200 font-bold"
+            isProfile && "text-primary-150 font-bold"
           )}
         >
           Profile

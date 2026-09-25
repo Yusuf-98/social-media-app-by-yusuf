@@ -153,7 +153,7 @@ export function PostCard({ post, priorityImage = false }: PostCardProps) {
           <button
             type="button"
             onClick={() => setExpanded((v) => !v)}
-            className="text-primary-200 font-bold md:font-semibold"
+            className="text-primary-150 font-bold md:font-semibold"
           >
             {expanded ? "Show Less" : "Show More"}
           </button>
