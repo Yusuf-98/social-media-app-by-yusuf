@@ -36,7 +36,7 @@ function InputField({ label, error, isPassword, className, id, type, ...props }:
             type="button"
             onClick={() => setVisible((v) => !v)}
             aria-label={visible ? "Hide password" : "Show password"}
-            className="right-xl absolute top-1/2 -translate-y-1/2"
+            className="absolute top-1/2 right-3.5 flex size-6 -translate-y-1/2 items-center justify-center"
           >
             {visible ? <EyeIcon className="size-5" /> : <EyeOffIcon className="size-5" />}
           </button>
