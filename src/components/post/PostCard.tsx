@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { IntentLink } from "@/components/common/IntentLink";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -43,7 +43,7 @@ export function PostCard({ post, priorityImage = false }: PostCardProps) {
       <div className="gap-md md:gap-lg flex w-full flex-col items-start">
         {/* Header */}
         <div className="flex w-full items-center">
-          <Link
+          <IntentLink
             href={`/profile/${post.author.username}`}
             className="gap-md md:gap-lg flex items-center"
           >
@@ -64,11 +64,11 @@ export function PostCard({ post, priorityImage = false }: PostCardProps) {
                 {formatRelativeTime(post.createdAt)}
               </p>
             </div>
-          </Link>
+          </IntentLink>
         </div>
 
         {/* Image */}
-        <Link
+        <IntentLink
           href={`/posts/${post.id}`}
           className="block max-h-150 w-full overflow-hidden rounded-md bg-neutral-950"
         >
@@ -80,7 +80,7 @@ export function PostCard({ post, priorityImage = false }: PostCardProps) {
             loading={priorityImage ? "eager" : "lazy"}
             fetchPriority={priorityImage ? "high" : undefined}
           />
-        </Link>
+        </IntentLink>
       </div>
 
       {/* Actions */}
@@ -108,12 +108,12 @@ export function PostCard({ post, priorityImage = false }: PostCardProps) {
           </div>
 
           {/* Comments */}
-          <Link href={`/posts/${post.id}`} className="gap-sm flex items-center">
+          <IntentLink href={`/posts/${post.id}`} className="gap-sm flex items-center">
             <MessageIcon className="size-6 shrink-0" />
             <p className="tracking-t-2 text-neutral-25 md:text-md md:tracking-t-2 text-sm font-semibold">
               {post.commentCount}
             </p>
-          </Link>
+          </IntentLink>
 
           {/* Shares */}
           <ShareDialog path={`/posts/${post.id}`}>

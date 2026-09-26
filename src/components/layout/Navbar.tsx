@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { IntentLink } from "@/components/common/IntentLink";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
@@ -30,6 +31,7 @@ export function Navbar() {
           {/* Logo */}
           <Link
             href="/feed"
+            prefetch={false}
             onClick={(e) => {
               // Hard navigation
               e.preventDefault();
@@ -52,9 +54,9 @@ export function Navbar() {
             <>
               {/* Right group - mobile */}
               <div className="gap-xl flex shrink-0 items-center md:hidden">
-                <Link href="/users/search" aria-label="Search">
+                <IntentLink href="/users/search" aria-label="Search">
                   <SearchWhiteIcon className="size-5" />
-                </Link>
+                </IntentLink>
                 <button
                   type="button"
                   onClick={() => setIsAuthMenuOpen((v) => !v)}
@@ -73,14 +75,14 @@ export function Navbar() {
               <div className="gap-lg hidden shrink-0 items-center md:flex">
                 <Button
                   variant="secondary"
-                  render={<Link href="/login" />}
+                  render={<IntentLink href="/login" />}
                   className="h-11! w-32.5!"
                 >
                   Login
                 </Button>
                 <Button
                   variant="primary"
-                  render={<Link href="/register" />}
+                  render={<IntentLink href="/register" />}
                   className="h-11! w-32.5!"
                 >
                   Register
@@ -95,10 +97,18 @@ export function Navbar() {
       {mounted && !isLoading && !isAuthenticated && isAuthMenuOpen && (
         <div className="bg-base-black absolute inset-x-0 top-full z-30 border-b border-neutral-900 md:hidden">
           <div className="custom-container gap-lg pb-xl mx-auto flex items-center">
-            <Button variant="secondary" render={<Link href="/login" />} className="h-10! flex-1">
+            <Button
+              variant="secondary"
+              render={<IntentLink href="/login" />}
+              className="h-10! flex-1"
+            >
               Login
             </Button>
-            <Button variant="primary" render={<Link href="/register" />} className="h-10! flex-1">
+            <Button
+              variant="primary"
+              render={<IntentLink href="/register" />}
+              className="h-10! flex-1"
+            >
               Register
             </Button>
           </div>

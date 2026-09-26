@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { IntentLink } from "@/components/common/IntentLink";
 import { useEffect, useRef } from "react";
 import type { MenuRoot } from "@base-ui/react/menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -41,9 +42,9 @@ export function ProfileMenu({ user, onLogout }: ProfileMenuProps) {
     <>
       {/* Right group - mobile */}
       <div className="gap-xl flex shrink-0 items-center md:hidden">
-        <Link href="/users/search" aria-label="Search">
+        <IntentLink href="/users/search" aria-label="Search">
           <SearchWhiteIcon className="size-5" />
-        </Link>
+        </IntentLink>
         <DropdownMenu actionsRef={mobileProfileMenuActionsRef}>
           <DropdownMenuTrigger aria-label="Profile menu">
             <Avatar className="size-10!">

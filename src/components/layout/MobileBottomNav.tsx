@@ -35,6 +35,7 @@ export function MobileBottomNav() {
     >
       <Link
         href="/feed"
+        prefetch={false}
         onClick={(e) => hardNavigate(e, "/feed")}
         className="gap-xxs md:gap-xs flex w-23.5 flex-col items-center justify-center"
       >
