@@ -6,6 +6,8 @@ import { applyLikeSaveCrossCheckList } from "@/lib/likeSaveCrossCheck";
 import { FEED_PAGE_SIZE } from "@/lib/pagination";
 import { qk } from "@/lib/queryKeys";
 
+const EXPLORE_STALE_MS = 10 * 60 * 1000;
+
 export function useExplorePosts(enabled = true) {
   const queryClient = useQueryClient();
 
@@ -20,6 +22,7 @@ export function useExplorePosts(enabled = true) {
       lastPage.pagination.page < lastPage.pagination.totalPages
         ? lastPage.pagination.page + 1
         : undefined,
+    staleTime: EXPLORE_STALE_MS,
     enabled,
   });
 }
