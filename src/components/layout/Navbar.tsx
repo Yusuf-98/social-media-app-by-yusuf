@@ -1,44 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import type { MenuRoot } from "@base-ui/react/menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useState } from "react";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { CloseIcon, LogoIcon, MenuHamburgerIcon, SearchWhiteIcon } from "@/components/icons";
 import { SearchDropdown } from "@/components/layout/SearchDropdown";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useIsClient } from "@/hooks/common/useIsClient";
 import { useLogout } from "@/hooks/auth/useLogout";
 
+const ProfileMenu = dynamic(
+  () => import("@/components/layout/ProfileMenu").then((m) => m.ProfileMenu),
+  {
+    ssr: false,
+  }
+);
+
 export function Navbar() {
   const { isAuthenticated, user, isLoading } = useAuth();
   const handleLogout = useLogout();
   const [isAuthMenuOpen, setIsAuthMenuOpen] = useState(false);
-  const mobileProfileMenuActionsRef = useRef<MenuRoot.Actions>(null);
-  const desktopProfileMenuActionsRef = useRef<MenuRoot.Actions>(null);
   const mounted = useIsClient();
-
-  // Close menu on breakpoint cross
-  useEffect(() => {
-    const mql = window.matchMedia("(min-width: 768px)");
-    const handleChange = (e: MediaQueryListEvent) => {
-      if (e.matches) {
-        mobileProfileMenuActionsRef.current?.close();
-      } else {
-        desktopProfileMenuActionsRef.current?.close();
-      }
-    };
-    mql.addEventListener("change", handleChange);
-    return () => mql.removeEventListener("change", handleChange);
-  }, []);
 
   return (
     <header className="relative w-full">
@@ -64,66 +47,7 @@ export function Navbar() {
           <SearchDropdown />
 
           {!mounted || isLoading ? null : isAuthenticated ? (
-            <>
-              {/* Right group - mobile */}
-              <div className="gap-xl flex shrink-0 items-center md:hidden">
-                <Link href="/users/search" aria-label="Search">
-                  <SearchWhiteIcon className="size-5" />
-                </Link>
-                <DropdownMenu actionsRef={mobileProfileMenuActionsRef}>
-                  <DropdownMenuTrigger aria-label="Profile menu">
-                    <Avatar className="size-10!">
-                      <AvatarImage src={user?.avatarUrl ?? undefined} alt={user?.name ?? ""} />
-                      <AvatarFallback>{user?.name?.[0]?.toUpperCase() ?? "?"}</AvatarFallback>
-                    </Avatar>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    {/* User info */}
-                    <div className="gap-3xs px-lg py-md flex flex-col">
-                      <p className="tracking-t-2 text-neutral-25 text-sm font-bold">{user?.name}</p>
-                      <p className="tracking-t-2 text-sm text-neutral-400">{user?.username}</p>
-                    </div>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem render={<Link href="/me" prefetch={false} />}>
-                      My Profile
-                    </DropdownMenuItem>
-                    <DropdownMenuItem variant="destructive" onClick={handleLogout}>
-                      Log Out
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-
-              {/* Profile - desktop */}
-              <DropdownMenu actionsRef={desktopProfileMenuActionsRef}>
-                <DropdownMenuTrigger
-                  aria-label="Profile menu"
-                  className="hidden shrink-0 items-center gap-3.25 md:flex"
-                >
-                  <Avatar className="size-6xl!">
-                    <AvatarImage src={user?.avatarUrl ?? undefined} alt={user?.name ?? ""} />
-                    <AvatarFallback>{user?.name?.[0]?.toUpperCase() ?? "?"}</AvatarFallback>
-                  </Avatar>
-                  <span className="text-md tracking-t-2 text-neutral-25 font-bold whitespace-nowrap">
-                    {user?.name}
-                  </span>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  {/* User info */}
-                  <div className="gap-3xs px-lg py-md flex flex-col">
-                    <p className="tracking-t-2 text-neutral-25 text-sm font-bold">{user?.name}</p>
-                    <p className="tracking-t-2 text-sm text-neutral-400">{user?.username}</p>
-                  </div>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem render={<Link href="/me" prefetch={false} />}>
-                    My Profile
-                  </DropdownMenuItem>
-                  <DropdownMenuItem variant="destructive" onClick={handleLogout}>
-                    Log Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </>
+            <ProfileMenu user={user} onLogout={handleLogout} />
           ) : (
             <>
               {/* Right group - mobile */}
