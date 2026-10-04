@@ -3,7 +3,6 @@
 import { IntentLink } from "@/components/common/IntentLink";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner";
 import { HeartFilledIcon, HeartOutlineIcon, MessageIcon, ShareIcon } from "@/components/icons";
 import { BookmarkIcon } from "@/components/icons/BookmarkIcon";
 import { LikedByDialog } from "@/components/post/LikedByDialog";
@@ -16,6 +15,7 @@ import { useSaveToggle } from "@/hooks/post/useSaveToggle";
 import { formatRelativeTime } from "@/lib/format";
 import type { Post } from "@/types/api";
 import { cn } from "@/lib/utils";
+import { notify } from "@/lib/notify";
 
 interface PostCardProps {
   post: Post;
@@ -130,7 +130,7 @@ export function PostCard({ post, priorityImage = false }: PostCardProps) {
             requireAuth(() => {
               const wasSaved = post.savedByMe;
               saveToggle.mutate(undefined, {
-                onSuccess: () => toast.success(wasSaved ? "Removed from saved" : "Saved"),
+                onSuccess: () => notify.success(wasSaved ? "Removed from saved" : "Saved"),
               });
             })
           }

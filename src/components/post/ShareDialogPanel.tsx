@@ -1,6 +1,5 @@
 "use client";
 
-import { toast } from "sonner";
 import {
   EmailIcon,
   FacebookIcon,
@@ -11,6 +10,7 @@ import {
   XIcon,
 } from "@/components/icons";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { notify } from "@/lib/notify";
 
 interface ShareDialogPanelProps {
   path: string;
@@ -27,11 +27,11 @@ export function ShareDialogPanel({ path, open, onOpenChange }: ShareDialogPanelP
     navigator.clipboard
       .writeText(getUrl())
       .then(() => {
-        toast.success("Link copied to clipboard");
+        notify.success("Link copied to clipboard");
         onOpenChange(false);
       })
       .catch(() => {
-        toast.error("Failed to copy link");
+        notify.error("Failed to copy link");
       });
   }
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Providers } from "@/components/providers/Providers";
-import { Toaster } from "@/components/ui/sonner";
+import { LazyToaster } from "@/components/providers/LazyToaster";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -54,7 +54,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <Providers>{children}</Providers>
-        <Toaster />
+        <LazyToaster />
       </body>
     </html>
   );

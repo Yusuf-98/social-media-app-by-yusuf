@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import {
   HeartFilledIcon,
   HeartOutlineIcon,
@@ -42,6 +41,7 @@ import { ApiError } from "@/lib/api/client";
 import { formatRelativeTime } from "@/lib/format";
 import { flattenPages } from "@/lib/pagination";
 import { cn } from "@/lib/utils";
+import { notify } from "@/lib/notify";
 
 interface PostDetailContentProps {
   postId: number;
@@ -162,11 +162,11 @@ export function PostDetailContent({ postId, variant = "page" }: PostDetailConten
                   deletePost.mutate(postId, {
                     onSuccess: () => {
                       setDeleteDialogOpen(false);
-                      toast.success("Post deleted");
+                      notify.success("Post deleted");
                       router.push("/feed");
                     },
                     onError: (err) => {
-                      toast.error(err instanceof ApiError ? err.message : "Failed to delete post");
+                      notify.error(err instanceof ApiError ? err.message : "Failed to delete post");
                     },
                   });
                 }}
@@ -183,7 +183,10 @@ export function PostDetailContent({ postId, variant = "page" }: PostDetailConten
 
           {/* Comments Section */}
           <div
-            className={cn("gap-xl flex w-full flex-col items-start", isModalSheet && "max-md:gap-lg")}
+            className={cn(
+              "gap-xl flex w-full flex-col items-start",
+              isModalSheet && "max-md:gap-lg"
+            )}
           >
             <p className="text-md tracking-t-2 text-neutral-25 font-bold">Comments</p>
 
@@ -264,7 +267,7 @@ export function PostDetailContent({ postId, variant = "page" }: PostDetailConten
                 requireAuth(() => {
                   const wasSaved = post.savedByMe;
                   saveToggle.mutate(undefined, {
-                    onSuccess: () => toast.success(wasSaved ? "Removed from saved" : "Saved"),
+                    onSuccess: () => notify.success(wasSaved ? "Removed from saved" : "Saved"),
                   });
                 })
               }

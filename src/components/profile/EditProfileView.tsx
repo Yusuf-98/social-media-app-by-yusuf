@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { ArrowIcon } from "@/components/icons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -19,6 +18,7 @@ import { UserAvatar } from "@/components/user/UserAvatar";
 import { useMe, useUpdateMe } from "@/hooks/user/useMe";
 import { ApiError } from "@/lib/api/client";
 import { editProfileSchema, type EditProfileFormValues } from "@/lib/validators/profile";
+import { notify } from "@/lib/notify";
 
 export function EditProfileView() {
   const router = useRouter();
@@ -74,11 +74,11 @@ export function EditProfileView() {
 
     updateMe.mutate(formData, {
       onSuccess: () => {
-        toast.success("Profile success updated");
+        notify.success("Profile success updated");
         router.push("/me");
       },
       onError: (error) => {
-        toast.error(error instanceof ApiError ? error.message : "Failed to update profile");
+        notify.error(error instanceof ApiError ? error.message : "Failed to update profile");
       },
     });
   }

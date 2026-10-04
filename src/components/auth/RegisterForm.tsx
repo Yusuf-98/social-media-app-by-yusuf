@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { AuthBackground } from "@/components/auth/AuthBackground";
 import { LogoIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -15,6 +14,7 @@ import { ApiError } from "@/lib/api/client";
 import { applyAuthToken } from "@/lib/auth-storage";
 import { registerSchema, type RegisterFormValues } from "@/lib/validators/auth";
 import { useAppDispatch } from "@/store/hooks";
+import { notify } from "@/lib/notify";
 
 export function RegisterForm() {
   const dispatch = useAppDispatch();
@@ -38,7 +38,7 @@ export function RegisterForm() {
       router.replace("/feed");
     },
     onError: (error) => {
-      toast.error(error instanceof ApiError ? error.message : "Registration failed");
+      notify.error(error instanceof ApiError ? error.message : "Registration failed");
     },
   });
 

@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { ArrowIcon } from "@/components/icons";
 import { PhotoDropzone } from "@/components/post/PhotoDropzone";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -13,6 +12,7 @@ import { useAuth } from "@/hooks/auth/useAuth";
 import { useCreatePost } from "@/hooks/post/useCreatePost";
 import { ApiError } from "@/lib/api/client";
 import { createPostSchema, type CreatePostFormValues } from "@/lib/validators/post";
+import { notify } from "@/lib/notify";
 
 interface CreatePostViewProps {
   variant?: "page" | "modal";
@@ -37,11 +37,11 @@ export function CreatePostView({ variant = "page" }: CreatePostViewProps) {
 
     createPost.mutate(formData, {
       onSuccess: () => {
-        toast.success("Post shared successfully");
+        notify.success("Post shared successfully");
         router.push("/feed");
       },
       onError: (error) => {
-        toast.error(error instanceof ApiError ? error.message : "Failed to create post");
+        notify.error(error instanceof ApiError ? error.message : "Failed to create post");
       },
     });
   }
@@ -78,10 +78,7 @@ export function CreatePostView({ variant = "page" }: CreatePostViewProps) {
             </div>
           )}
 
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="gap-xl flex w-full flex-col items-end"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="gap-xl flex w-full flex-col items-end">
             <div className="gap-xxs flex w-full flex-col items-start">
               <p className="tracking-t-2 text-neutral-25 w-full text-sm font-bold">Photo</p>
               <Controller

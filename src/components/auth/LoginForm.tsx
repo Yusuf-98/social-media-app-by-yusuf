@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { AuthBackground } from "@/components/auth/AuthBackground";
 import { LogoIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -15,6 +14,7 @@ import { ApiError } from "@/lib/api/client";
 import { applyAuthToken } from "@/lib/auth-storage";
 import { loginSchema, type LoginFormValues } from "@/lib/validators/auth";
 import { useAppDispatch } from "@/store/hooks";
+import { notify } from "@/lib/notify";
 
 export function LoginForm() {
   const dispatch = useAppDispatch();
@@ -37,10 +37,10 @@ export function LoginForm() {
     },
     onError: (error) => {
       if (error instanceof ApiError && error.status === 401) {
-        toast.error("Incorrect email or password. Please try again.");
+        notify.error("Incorrect email or password. Please try again.");
         return;
       }
-      toast.error("Something went wrong. Please try again.");
+      notify.error("Something went wrong. Please try again.");
     },
   });
 
