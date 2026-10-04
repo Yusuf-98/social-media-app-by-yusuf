@@ -4,12 +4,13 @@ import Link from "next/link";
 import { IntentLink } from "@/components/common/IntentLink";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { CloseIcon, LogoIcon, MenuHamburgerIcon, SearchWhiteIcon } from "@/components/icons";
 import { SearchDropdown } from "@/components/layout/SearchDropdown";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useIsClient } from "@/hooks/common/useIsClient";
 import { useLogout } from "@/hooks/auth/useLogout";
+import { cn } from "@/lib/utils";
 
 const ProfileMenu = dynamic(
   () => import("@/components/layout/ProfileMenu").then((m) => m.ProfileMenu),
@@ -73,20 +74,20 @@ export function Navbar() {
 
               {/* Login/Register - desktop */}
               <div className="gap-lg hidden shrink-0 items-center md:flex">
-                <Button
-                  variant="secondary"
-                  render={<IntentLink href="/login" />}
-                  className="h-11! w-32.5!"
+                <IntentLink
+                  href="/login"
+                  className={cn(
+                    buttonVariants({ variant: "secondary", className: "h-11! w-32.5!" })
+                  )}
                 >
                   Login
-                </Button>
-                <Button
-                  variant="primary"
-                  render={<IntentLink href="/register" />}
-                  className="h-11! w-32.5!"
+                </IntentLink>
+                <IntentLink
+                  href="/register"
+                  className={cn(buttonVariants({ variant: "primary", className: "h-11! w-32.5!" }))}
                 >
                   Register
-                </Button>
+                </IntentLink>
               </div>
             </>
           )}
@@ -97,20 +98,18 @@ export function Navbar() {
       {mounted && !isLoading && !isAuthenticated && isAuthMenuOpen && (
         <div className="bg-base-black absolute inset-x-0 top-full z-30 border-b border-neutral-900 md:hidden">
           <div className="custom-container gap-lg pb-xl mx-auto flex items-center">
-            <Button
-              variant="secondary"
-              render={<IntentLink href="/login" />}
-              className="h-10! flex-1"
+            <IntentLink
+              href="/login"
+              className={cn(buttonVariants({ variant: "secondary", className: "h-10! flex-1" }))}
             >
               Login
-            </Button>
-            <Button
-              variant="primary"
-              render={<IntentLink href="/register" />}
-              className="h-10! flex-1"
+            </IntentLink>
+            <IntentLink
+              href="/register"
+              className={cn(buttonVariants({ variant: "primary", className: "h-10! flex-1" }))}
             >
               Register
-            </Button>
+            </IntentLink>
           </div>
         </div>
       )}
