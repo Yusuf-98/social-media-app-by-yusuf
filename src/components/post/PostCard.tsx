@@ -2,7 +2,7 @@
 
 import { IntentLink } from "@/components/common/IntentLink";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { HeartFilledIcon, HeartOutlineIcon, MessageIcon, ShareIcon } from "@/components/icons";
 import { BookmarkIcon } from "@/components/icons/BookmarkIcon";
 import { LikedByDialog } from "@/components/post/LikedByDialog";
@@ -10,6 +10,7 @@ import { PostImage } from "@/components/post/PostImage";
 import { ShareDialog } from "@/components/post/ShareDialog";
 import { UserAvatar } from "@/components/user/UserAvatar";
 import { useAuth } from "@/hooks/auth/useAuth";
+import { useInView } from "@/hooks/common/useInView";
 import { useLikeToggle } from "@/hooks/post/useLikeToggle";
 import { useSaveToggle } from "@/hooks/post/useSaveToggle";
 import { formatRelativeTime } from "@/lib/format";
@@ -22,12 +23,17 @@ interface PostCardProps {
   priorityImage?: boolean;
 }
 
+const IMAGE_ROOT_MARGIN = "800px";
+
 export function PostCard({ post, priorityImage = false }: PostCardProps) {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const [expanded, setExpanded] = useState(false);
   const likeToggle = useLikeToggle(post);
   const saveToggle = useSaveToggle(post);
+  const imageRef = useRef<HTMLAnchorElement>(null);
+  const imageInView = useInView(imageRef, IMAGE_ROOT_MARGIN, !priorityImage);
+  const showImage = priorityImage || imageInView;
 
   function requireAuth(action: () => void) {
     if (!isAuthenticated) {
@@ -69,17 +75,22 @@ export function PostCard({ post, priorityImage = false }: PostCardProps) {
 
         {/* Image */}
         <IntentLink
+          ref={imageRef}
           href={`/posts/${post.id}`}
           className="block max-h-150 w-full overflow-hidden rounded-md bg-neutral-950"
         >
-          <PostImage
-            post={post}
-            natural
-            sizes="(min-width: 768px) 600px, 100vw"
-            className="max-h-150 object-contain"
-            loading={priorityImage ? "eager" : "lazy"}
-            fetchPriority={priorityImage ? "high" : undefined}
-          />
+          {showImage ? (
+            <PostImage
+              post={post}
+              natural
+              sizes="(min-width: 768px) 600px, 100vw"
+              className="max-h-150 object-contain"
+              loading={priorityImage ? "eager" : "lazy"}
+              fetchPriority={priorityImage ? "high" : undefined}
+            />
+          ) : (
+            <div className="aspect-square max-h-150 w-full" />
+          )}
         </IntentLink>
       </div>
 
