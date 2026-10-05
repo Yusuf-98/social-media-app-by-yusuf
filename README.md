@@ -111,6 +111,10 @@ Library. They target real interactive logic rather than static markup:
 - **Optimistic mutations**: `useLikeToggle` (optimistic update, rollback on error, like
   count never goes negative) and `useComments` (optimistic insert/remove, `commentCount`
   bump/decrement, rollback on error).
+- **Routing**: `proxy.ts` rewrites `/feed` to the signed-in variant when the token cookie is
+  present and redirects guarded routes to the login page without one.
+- **Images**: only HTTPS Cloudinary URLs go through the image optimizer; other hosts are
+  served as they are.
 - **Auth**: the API client's global 401 handler (only fires when a request actually
   carried a token) and `auth-storage`'s token helpers keeping localStorage, the cookie,
   and Redux in sync.
@@ -156,7 +160,13 @@ The mobile test does not simply run on a fast laptop. Lighthouse slows the machi
 
 The desktop test uses a 1350 × 940 px screen, 10 Mbps, 40 ms latency and no CPU slowdown.
 
-Run it yourself with [PageSpeed Insights](https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fsocial-media-app-by-yusuf.vercel.app%2Ffeed&form_factor=mobile) or `npx lighthouse https://social-media-app-by-yusuf.vercel.app/feed --form-factor=mobile`. A single run can move by a few points with network conditions, which is why the figures above are medians.
+Run it yourself with [PageSpeed Insights](https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fsocial-media-app-by-yusuf.vercel.app%2Ffeed&form_factor=mobile) or the Lighthouse CLI with its default (simulated) throttling. The figures above were collected with:
+
+```bash
+npx lighthouse https://social-media-app-by-yusuf.vercel.app/feed --form-factor=mobile \n  --only-categories=performance,accessibility,best-practices,seo \n  --chrome-flags="--headless=new --disable-features=CalculateNativeWinOcclusion --disable-backgrounding-occluded-windows --disable-renderer-backgrounding"
+```
+
+The extra Chrome flags stop Windows from throttling the headless window; they do not change how Lighthouse scores the page. Use `--preset=desktop` instead of `--form-factor=mobile` for the desktop runs. A single run can move by a few points, which is why the figures above are medians.
 
 ### How it stays fast
 
@@ -200,13 +210,14 @@ src/
 ├── app/            # Routes (App Router) — Server Components by default,
 │                   # interactive pieces delegated to client components
 ├── components/     # UI components, grouped by feature (post, profile, comment, ...)
+├── fonts/          # Self-hosted SF Pro (WOFF2 subsets)
 ├── hooks/          # TanStack Query hooks, grouped by feature
 ├── lib/
 │   ├── api/        # API client + one file per resource
 │   └── ...         # Cache patching, query keys, pagination, utils
 ├── store/          # Redux slice (auth token + hydration flag only)
 ├── types/          # Shared API types
-└── proxy.ts        # Server-side route guard (Next's middleware convention)
+└── proxy.ts        # Route guard and signed-in feed rewrite (Next's middleware convention)
 ```
 
 ## Deployment
