@@ -120,31 +120,31 @@ pull request to `main` (see [ci.yml](.github/workflows/ci.yml)).
 
 ## Performance
 
-Lighthouse results for the [live site](https://social-media-app-by-yusuf.vercel.app/feed): the median of 10 mobile and 6 desktop runs on 26 September 2026 (Lighthouse 13.5.0).
+Lighthouse results for the [live site](https://social-media-app-by-yusuf.vercel.app/feed): the median of 10 mobile and 6 desktop runs on 6 October 2026 (Lighthouse 13.5.0).
 
 | | 📱 Mobile | 🖥️ Desktop |
 | --- | :---: | :---: |
-| **Performance** | **92** | **100** |
+| **Performance** | **96** | **100** |
 | **Accessibility** | **100** | **100** |
 | **Best practices** | **100** | **100** |
 | **SEO** | **100** | **100** |
 
-Mobile performance ranged from 89 to 95 across the 10 runs (median 92); desktop from 99 to 100.
+Mobile performance ranged from 92 to 97 across the 10 runs (median 95.5); desktop scored 100 in all 6.
 
 ### Core metrics
 
 | Metric | 📱 Mobile | 🖥️ Desktop | Good if |
 | --- | :---: | :---: | :---: |
 | **Largest Contentful Paint** (main content visible) | 🟠 2.6 s | 🟢 0.6 s | ≤ 2.5 s |
-| **Total Blocking Time** (page unresponsive) | 🟠 248 ms | 🟢 11 ms | ≤ 200 ms |
+| **Total Blocking Time** (page unresponsive) | 🟢 144 ms | 🟢 8 ms | ≤ 200 ms |
 | **Cumulative Layout Shift** (content jumping) | 🟢 0 | 🟢 0.01 | ≤ 0.1 |
-| **Speed Index** (how fast it fills in) | 🟢 1.3 s | 🟢 0.6 s | ≤ 3.4 s |
-| **First Contentful Paint** (first pixels) | 🟢 1.0 s | 🟢 0.4 s | ≤ 1.8 s |
-| **Page weight** (feed, compressed) | 485 KiB | 452 KiB | |
+| **Speed Index** (how fast it fills in) | 🟢 1.3 s | 🟢 0.5 s | ≤ 3.4 s |
+| **First Contentful Paint** (first pixels) | 🟢 1.0 s | 🟢 0.3 s | ≤ 1.8 s |
+| **Page weight** (feed, compressed) | 469 KiB | 413 KiB | |
 
 🟢 within Google's "good" range · 🟠 needs improvement
 
-Total Blocking Time is the metric that moves most between runs (141 to 330 ms on mobile): the largest share is React's own start-up work on a CPU slowed down 4×.
+Total Blocking Time is the metric that moves most between runs (107 to 259 ms on mobile): the largest share is React and Next.js evaluating their own code on a CPU slowed down 4×.
 
 ### What "mobile" means in this test
 
@@ -160,12 +160,12 @@ Run it yourself with [PageSpeed Insights](https://pagespeed.web.dev/analysis?url
 
 ### How it stays fast
 
-- **Server-rendered first paint**: route pages are thin Server Component shells. `/feed` is statically generated and revalidated every minute; its first page of posts is fetched on the server and hydrated into TanStack Query, so the first post image is already in the initial HTML, preloaded with `fetchpriority="high"`. That data is trusted for ten minutes, so the client does not ask for it again while the page loads.
+- **Server-rendered first paint**: route pages are thin Server Component shells. `/feed` is statically generated and revalidated every minute; its first page of posts is fetched on the server and hydrated into TanStack Query, so the first post image is already in the initial HTML, preloaded with `fetchpriority="high"`. There is no route-level loading fallback, so the posts ship in the visible HTML rather than behind a streamed placeholder. That data is trusted for ten minutes, so the client does not ask for it again while the page loads.
 - **No flash for signed-in users**: when the token cookie is present, `proxy.ts` rewrites `/feed` to a static skeleton-only variant. Signed-in visitors never see public posts appear and vanish, and no image is downloaded twice.
 - **Skeletons have the exact box model** of the post card they stand in for (header, image, actions and caption rows), so nothing shifts when data arrives.
-- **Images** are served from Cloudinary through `next/image` in AVIF or WebP with responsive `sizes`. The first image loads eagerly with a high priority and the rest are lazy; each post image keeps its own aspect ratio instead of being cropped, so there is no reflow when it loads. Avatars or images hosted elsewhere are shown as they are instead of failing.
+- **Images** are served from Cloudinary through `next/image` in AVIF or WebP with responsive `sizes`. The first image loads eagerly with a high priority. Every image below it is only requested once its card comes within 800 px of the viewport, in a box of the same size reserved beforehand, and the second one keeps a high fetch priority so its order is predictable; each post image keeps its own aspect ratio instead of being cropped, so there is no reflow when it loads. Avatars or images hosted elsewhere are shown as they are instead of failing.
 - **Fonts**: SF Pro is converted to WOFF2 and subset to ASCII and common punctuation (kerning and tracking kept), about 87 KB for all eight files. Only the body family is preloaded, and `font-display: swap` with size-adjusted fallbacks keeps text from shifting.
-- **JavaScript on demand**: the share and likes dialogs load when they are first opened (or on hover or focus, or after eight idle seconds), and the profile menu loads only for signed-in visitors. Links prefetch on hover, focus or touch instead of as they scroll into view, so opening the feed does not fire a burst of background requests.
+- **JavaScript on demand**: the share and likes dialogs load when they are first opened (or on hover or focus, or after eight idle seconds), and the profile menu loads only for signed-in visitors. The toast library loads with the first notification, the desktop search results load once someone starts typing, and the navbar sign-in links are plain links, keeping the UI primitive library out of the feed's first load. Links prefetch on hover, focus or touch instead of as they scroll into view, so opening the feed does not fire a burst of background requests.
 - **Pagination**: the feed loads three posts at a time and asks for the next page 800 px before the reader reaches the end, so new posts are ready before they are needed.
 - **Caching and requests**: hashed assets are served as immutable and Brotli-compressed, query results are cached for 30 seconds, 4xx answers are not retried, and search is debounced.
 
