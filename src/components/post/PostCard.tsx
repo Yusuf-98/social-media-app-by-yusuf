@@ -15,7 +15,7 @@ import { useLikeToggle } from "@/hooks/post/useLikeToggle";
 import { useSaveToggle } from "@/hooks/post/useSaveToggle";
 import { formatRelativeTime } from "@/lib/format";
 import type { Post } from "@/types/api";
-import { clsx } from "clsx";
+import { cn } from "@/lib/utils";
 import { notify } from "@/lib/notify";
 
 interface PostCardProps {
@@ -156,7 +156,7 @@ export function PostCard({ post, priorityImage = false }: PostCardProps) {
       <div className="tracking-t-1 md:gap-xs md:text-md md:tracking-t-2 flex w-full flex-col items-start gap-0 text-sm md:w-131.5">
         <p className="text-neutral-25 w-full font-bold">{post.author.name}</p>
         {post.caption && (
-          <p className={clsx("text-neutral-25 w-full", !expanded && "line-clamp-2")}>
+          <p className={cn("text-neutral-25 w-full", !expanded && "line-clamp-2")}>
             {post.caption}
           </p>
         )}
