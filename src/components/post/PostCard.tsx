@@ -21,11 +21,12 @@ import { notify } from "@/lib/notify";
 interface PostCardProps {
   post: Post;
   priorityImage?: boolean;
+  imageFetchPriority?: "high" | "low" | "auto";
 }
 
 const IMAGE_ROOT_MARGIN = "800px";
 
-export function PostCard({ post, priorityImage = false }: PostCardProps) {
+export function PostCard({ post, priorityImage = false, imageFetchPriority }: PostCardProps) {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const [expanded, setExpanded] = useState(false);
@@ -86,7 +87,7 @@ export function PostCard({ post, priorityImage = false }: PostCardProps) {
               sizes="(min-width: 768px) 600px, 100vw"
               className="max-h-150 object-contain"
               loading={priorityImage ? "eager" : "lazy"}
-              fetchPriority={priorityImage ? "high" : undefined}
+              fetchPriority={imageFetchPriority}
             />
           ) : (
             <div
