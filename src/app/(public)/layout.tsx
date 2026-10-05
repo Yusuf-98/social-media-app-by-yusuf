@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { Navbar } from "@/components/layout/Navbar";
-import { cn } from "@/lib/utils";
+import { clsx } from "clsx";
 
 export default function PublicLayout({
   children,
@@ -37,7 +37,7 @@ export default function PublicLayout({
     <>
       {/* Navbar */}
       <div
-        className={cn(
+        className={clsx(
           hasOwnMobileHeader && "hidden md:block",
           showModal && "pointer-events-none relative"
         )}

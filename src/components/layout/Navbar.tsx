@@ -10,7 +10,6 @@ import { SearchDropdown } from "@/components/layout/SearchDropdown";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useIsClient } from "@/hooks/common/useIsClient";
 import { useLogout } from "@/hooks/auth/useLogout";
-import { cn } from "@/lib/utils";
 
 const ProfileMenu = dynamic(
   () => import("@/components/layout/ProfileMenu").then((m) => m.ProfileMenu),
@@ -76,15 +75,13 @@ export function Navbar() {
               <div className="gap-lg hidden shrink-0 items-center md:flex">
                 <IntentLink
                   href="/login"
-                  className={cn(
-                    buttonVariants({ variant: "secondary", className: "h-11! w-32.5!" })
-                  )}
+                  className={buttonVariants({ variant: "secondary", className: "h-11! w-32.5!" })}
                 >
                   Login
                 </IntentLink>
                 <IntentLink
                   href="/register"
-                  className={cn(buttonVariants({ variant: "primary", className: "h-11! w-32.5!" }))}
+                  className={buttonVariants({ variant: "primary", className: "h-11! w-32.5!" })}
                 >
                   Register
                 </IntentLink>
@@ -100,13 +97,13 @@ export function Navbar() {
           <div className="custom-container gap-lg pb-xl mx-auto flex items-center">
             <IntentLink
               href="/login"
-              className={cn(buttonVariants({ variant: "secondary", className: "h-10! flex-1" }))}
+              className={buttonVariants({ variant: "secondary", className: "h-10! flex-1" })}
             >
               Login
             </IntentLink>
             <IntentLink
               href="/register"
-              className={cn(buttonVariants({ variant: "primary", className: "h-10! flex-1" }))}
+              className={buttonVariants({ variant: "primary", className: "h-10! flex-1" })}
             >
               Register
             </IntentLink>

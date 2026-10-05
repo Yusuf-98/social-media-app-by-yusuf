@@ -11,7 +11,7 @@ import {
 } from "@/components/icons";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useHideOnScroll } from "@/hooks/common/useHideOnScroll";
-import { cn } from "@/lib/utils";
+import { clsx } from "clsx";
 
 export function MobileBottomNav() {
   const pathname = usePathname();
@@ -28,7 +28,7 @@ export function MobileBottomNav() {
 
   return (
     <nav
-      className={cn(
+      className={clsx(
         "my-3xl h-7xl md:h-8xl fixed inset-x-0 bottom-0 z-40 mx-auto flex w-86.25 items-center justify-center gap-11.25 rounded-full border border-neutral-900 bg-neutral-950 backdrop-blur-[50px] transition-opacity duration-300 md:w-90",
         visible ? "opacity-100" : "pointer-events-none opacity-0"
       )}
@@ -45,9 +45,9 @@ export function MobileBottomNav() {
           <HomeIcon className="size-5 md:size-6" />
         )}
         <p
-          className={cn(
-            "text-neutral-25 md:text-md text-xs",
-            isHome && "text-primary-150 font-bold"
+          className={clsx(
+            "md:text-md text-xs",
+            isHome ? "text-primary-150 font-bold" : "text-neutral-25"
           )}
         >
           Home
@@ -75,9 +75,9 @@ export function MobileBottomNav() {
           <ProfileFilledIcon className="size-5 md:size-6" />
         )}
         <p
-          className={cn(
-            "text-neutral-25 md:text-md text-xs",
-            isProfile && "text-primary-150 font-bold"
+          className={clsx(
+            "md:text-md text-xs",
+            isProfile ? "text-primary-150 font-bold" : "text-neutral-25"
           )}
         >
           Profile

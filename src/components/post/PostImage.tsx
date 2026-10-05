@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ImageOff } from "lucide-react";
 import { useState } from "react";
 import { isOptimizableImage } from "@/lib/image";
-import { cn } from "@/lib/utils";
+import { clsx } from "clsx";
 import type { Post } from "@/types/api";
 
 interface PostImageProps {
@@ -31,7 +31,7 @@ export function PostImage({
   if (error) {
     return (
       <div
-        className={cn(
+        className={clsx(
           "gap-sm flex flex-col items-center justify-center bg-neutral-900",
           natural ? "aspect-square w-full" : "absolute inset-0"
         )}
@@ -50,7 +50,7 @@ export function PostImage({
         width={1080}
         height={1080}
         sizes={sizes}
-        className={cn("h-auto w-full", className)}
+        className={clsx("h-auto w-full", className)}
         loading={loading}
         fetchPriority={fetchPriority}
         unoptimized={unoptimized}
