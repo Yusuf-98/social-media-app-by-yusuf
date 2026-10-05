@@ -14,6 +14,8 @@ const sfProDisplay = localFont({
   ],
   variable: "--font-display",
   display: "swap",
+  adjustFontFallback: false,
+  fallback: ["Arial", "sans-serif"],
   preload: false,
 });
 
@@ -26,6 +28,8 @@ const sfProText = localFont({
   ],
   variable: "--font-body",
   display: "swap",
+  adjustFontFallback: false,
+  fallback: ["Arial", "sans-serif"],
 });
 
 export const metadata: Metadata = {
