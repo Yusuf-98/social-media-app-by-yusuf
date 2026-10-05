@@ -89,7 +89,11 @@ export function PostCard({ post, priorityImage = false }: PostCardProps) {
               fetchPriority={priorityImage ? "high" : undefined}
             />
           ) : (
-            <div className="aspect-square max-h-150 w-full" />
+            <div
+              role="img"
+              aria-label={post.caption || `Post by ${post.author.name}`}
+              className="aspect-square max-h-150 w-full"
+            />
           )}
         </IntentLink>
       </div>
