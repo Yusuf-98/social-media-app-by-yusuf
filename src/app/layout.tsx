@@ -32,6 +32,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: SITE_NAME,
   description: "Sociality — connect and share with your community",
+  twitter: { card: "summary_large_image" },
 };
 
 const organizationJsonLd = {
